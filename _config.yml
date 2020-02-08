@@ -1,22 +1,19 @@
-title: Hello, world! I'm Michael Chang
+title: Blog
 description: > # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+  This is Michael Chang blog main page
 permalink: ':title/'
 baseurl: "/" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-site-twitter: #if your site has a twitter account, enter it here
-
+site-twitter: https://twitter.com/dks50217
 # Author Settings
-author: David Freeman # add your name
-author-img: david-freeman.jpg # add your photo
-about-author: I am a web developer focusing on front-end development. Always hungry to keep learning. # add description
-social-twitter: # add your Twitter handle
-social-facebook: # add your Facebook handle
-social-github: artemsheludko # add your Github handle
-social-linkedin: # add your Linkedin handle
-social-email: # add your Email address
+author: Michael Chang # add your name
+author-img: michael-chang.jpg # add your photo
+about-author: 目前是位後端工程師，但也接觸全端開發，前端善用Vue，後端使用C#開發Web API，同時也具有DB效能調效經驗。
+social-twitter: dks50217
+social-facebook: dks50217
+social-github: dks50217
+social-linkedin: 家豪-張-03542b155
+social-email: dks50217@gmail.com
 
 # Disqus
 discus-identifier: mr-brown # add your discus identifier

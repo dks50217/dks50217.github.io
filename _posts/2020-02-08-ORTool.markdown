@@ -1,0 +1,9 @@
+---
+layout: post
+title: OR Tool
+date: 2020-02-08 10:00:00 +0300
+description: You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. # Add post description (optional)
+img: OR-Tool.jpeg # Add image post (optional)
+tags: [Operations Research, Web API] # add tag
+---
+作業研究中的指派問題、CPM、賽局理論分布等快速計算工具，有助於快速計算與教學
