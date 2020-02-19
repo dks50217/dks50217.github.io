@@ -1,0 +1,131 @@
+<html>
+<head>
+	<script>
+
+	var _recognition;
+	var _recognitionstate = 0;
+	var _recognition_starttime;
+	var _recognition_endtime;
+	var _recognition_newstart = true;
+
+	if (!('webkitSpeechRecognition' in window)) {
+		//Speech API not supported here…
+	} else { //Let’s do some cool stuff :)
+		_recognition = new webkitSpeechRecognition(); //That is the object that will manage our whole recognition process. 
+		_recognition.continuous = true;   //Suitable for dictation. 
+		_recognition.interimResults = true;  //If we want to start receiving results even if they are not final.
+		//Define some more additional parameters for the recognition:
+		_recognition.lang = "cmn-Hant-TW"; 
+		_recognition.maxAlternatives = 1; //Since from our experience, the highest result is really the best...
+	}
+
+	function Recognition_Start(){
+		if(_recognition && _recognitionstate == 0){
+			_recognitionstate = 1;
+			_recognition.start();
+		}
+	}
+
+	function Recognition_End(){
+		if(_recognition && _recognitionstate == 1){
+			_recognitionstate = 0;
+			_recognition.stop();
+		}
+	}
+
+	_recognition.onstart = function() {
+		console.log('recognition.onstart');
+		//Listening (capturing voice from audio input) started.
+		//This is a good place to give the user visual feedback about that (i.e. flash a red light, etc.)
+	};
+
+	_recognition.onend = function() {
+		console.log('recognition.onend');
+		
+		if(_recognitionstate == 1){
+			_recognition.start();
+		}
+		//Again – give the user feedback that you are not listening anymore. If you wish to achieve continuous recognition – you can write a script to start the recognizer again here.
+	};
+
+	_recognition.onresult = function(event) { //the event holds the results
+	//Yay – we have results! Let’s check if they are defined and if final or not:
+		if (typeof(event.results) === 'undefined') { //Something is wrong…
+			_recognition.stop();
+			return;
+		}
+		
+		var msg;
+		
+		if(_recognition_newstart){
+			_recognition_starttime = new Date();
+		}
+
+		try{
+			for (var i = event.resultIndex; i < event.results.length; ++i) {      
+				if (event.results[i].isFinal) { //Final results
+				
+					_recognition_endtime = new Date();
+					msg = {"start" : __parseTime(_recognition_starttime), "end" : __parseTime(_recognition_endtime), "msg" : event.results[i][0].transcript};
+					
+					//__vm.addtextmsg(msg, _recognition_newstart);
+					_recognition_newstart = true;
+				
+					console.log("final results: " + event.results[i][0].transcript);   //Of course – here is the place to do useful things with the results.
+				} else {   //i.e. interim...
+				
+					_recognition_endtime = new Date();
+					msg = {"start" : __parseTime(_recognition_starttime), "end" : __parseTime(_recognition_endtime), "msg" : event.results[i][0].transcript};
+					
+					//__vm.addtextmsg(msg, _recognition_newstart);
+					_recognition_newstart = false;
+					
+					console.log("interim results: " + event.results[i][0].transcript);  //You can use these results to give the user near real time experience.
+				} 
+			}
+		}
+		catch(e){
+			console.log(e.message);
+		}
+	}; 
+
+	_recognition.onaudiostart = function() {console.log("_recognition.onaudiostart")};  
+
+	_recognition.onaudioend = function() {console.log("_recognition.onaudioend")};
+
+	_recognition.onsoundstart = function() {console.log("_recognition.onsoundstart")};  
+
+	_recognition.onsoundend = function() {console.log("_recognition.onsoundend")};
+
+	_recognition.onspeechstart = function() {console.log("_recognition.onspeechstart")};  
+
+	_recognition.onspeechend = function() {console.log("_recognition.onspeechend")};
+
+	_recognition.onnomatch = function(event) {};
+
+	_recognition.onerror = function(event) {};
+
+	function __checkTime(i) {
+	  if (i < 10) {
+		i = "0" + i;
+	  }
+	  return i;
+	}
+
+	function __parseTime(date) {
+	  var h = date.getHours();
+	  var m = date.getMinutes();
+	  var s = date.getSeconds();
+
+	  m = __checkTime(m);
+	  s = __checkTime(s);
+	  return h + ":" + m + ":" + s;
+	}
+	</script>
+</head>
+<body>
+<button onclick="Recognition_Start()">Start</button>
+<button onclick="Recognition_End()">End</button>
+
+</body>
+</html>
