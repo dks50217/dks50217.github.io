@@ -2,7 +2,7 @@ title: Blog
 description: > # this means to ignore newlines until "baseurl:"
   This is Michael Chang blog main page
 permalink: ':title/'
-baseurl: "/flexyble-jekyll" # the subpath of your site, e.g. /blog
+baseurl: "/" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 site-twitter: https://twitter.com/dks50217
 # Author Settings
