@@ -1,0 +1,21 @@
+I"[<script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default">
+</script>
+
+<p>這是在研究所期間撰寫論文時所寫的一個小工具。當時研究因苦於找不到相關軟體可以拿來當實驗工具，只好自己開發，希望這篇文章對未來人因領域有在做人機介面互動的學生有所幫助，另外也做了一個前端復刻版。</p>
+
+<p>在開始進入主要文章前，必須要先了解何為費茲定律、指向裝置等相關計算方式。</p>
+
+<h2 id="費茲定律-fitts-law">費茲定律 (Fitts’ Law)</h2>
+
+<p>費茲定律（Fitts’ Law）是介面設計中常用的概念，Fitts於 1954 年根據發展了一項運動時間與空間準確度的關係式，而這項關係式成為現今人機介面在指向評估下的一套標準。Fitts提出其公式，以輸出量 (T hroughput)做為績效表現的指標，而輸出量是透過作業難度(Index of Difficulty,ID除以運動時間(M ovement time,MT)而得知，如公式如下:</p>
+
+<script type="math/tex; mode=display">T = a + b \log_2{D/W+1}</script>
+
+<h2 id="指向裝置-">指向裝置 ()</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+</code></pre></div></div>
+
+<p>基於費茲定律和ISO 9241-9來衡量人類績效的指向工具</p>
+
+:ET

@@ -2,7 +2,7 @@ title: Blog
 description: > # this means to ignore newlines until "baseurl:"
   This is Michael Chang blog main page
 permalink: ':title/'
-baseurl: "/" # the subpath of your site, e.g. /blog
+baseurl: "/flexyble-jekyll" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
 site-twitter: https://twitter.com/dks50217
 # Author Settings
@@ -16,7 +16,7 @@ social-linkedin: 家豪-張-03542b155
 social-email: dks50217@gmail.com
 
 # Disqus
-discus-identifier: mr-brown # add your discus identifier
+discus-identifier: dks50217 # add your discus identifier
 
 # Tracker
 analytics: # Google Analytics

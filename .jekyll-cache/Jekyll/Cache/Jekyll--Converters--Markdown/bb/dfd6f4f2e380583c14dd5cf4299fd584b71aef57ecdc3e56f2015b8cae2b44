@@ -1,0 +1,29 @@
+I"n<script type="text/javascript" async="" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=default">
+</script>
+
+<p>這是在研究所期間撰寫論文時所寫的一個小工具。當時研究因苦於找不到相關軟體可以拿來當實驗工具，只好自己開發，希望這篇文章對未來人因領域有在做人機介面互動的學生有所幫助，另外也做了一個前端復刻版。</p>
+
+<p>在開始進入主要文章前，必須要先了解何為費茲定律、指向裝置等相關計算方式。</p>
+
+<h2 id="費茲定律-fitts-law">費茲定律 (Fitts’ Law)</h2>
+
+<p>費茲定律（Fitts’ Law）是介面設計中常用的概念，Fitts於 1954 年根據發展了一項運動時間與空間準確度的關係式，而這項關係式成為現今人機介面在指向評估下的一套標準。Fitts提出其公式，以輸出量(Throughput)做為績效表現的指標，而輸出量是透過作業難度(Index of Difficulty,ID除以運動時間(Movement time,MT)而得知，如公式如下:</p>
+
+<script type="math/tex; mode=display">Throughput = (\frac{ID}{MT})</script>
+
+<p>而ID 是透過兩目標物距離 D 與兩目標物寬度 W
+間的比率計算而得出其公式如下:</p>
+
+<script type="math/tex; mode=display">ID = \log_2 (\frac{2D}{W})</script>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">![</span>Alt text]<span class="o">(</span>assets/img/FittsLaw/Fitt<span class="s1">'s.png)
+</span></code></pre></div></div>
+
+<p>這項公式經由多項研究發展後，演變為下圖的衡量績效方式，兩目標物的距離變為24個項目所組成的圓形，目標物寬度 W 變為每個圓形，單位為Pixel公式如下:</p>
+
+<script type="math/tex; mode=display">ID = \log_2 (\frac{2D}{W}+1)</script>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>本工具就是基於以上的計算公式來開發，每次可以自訂要設定目標物寬度與兩目標物的距離，任務完成後，會計算出本次操作所得出的輸出量。
+</code></pre></div></div>
+
+:ET
