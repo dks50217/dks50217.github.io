@@ -19,7 +19,7 @@ social-email: dks50217@gmail.com
 discus-identifier: dks50217 # add your discus identifier
 
 # Tracker
-analytics: # Google Analytics
+analytics: UA-158793822-1 # Google Analytics
 
 # Build Settings
 markdown: kramdown
