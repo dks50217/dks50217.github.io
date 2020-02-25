@@ -1,0 +1,34 @@
+title: Blog
+description: > # this means to ignore newlines until "baseurl:"
+  This is Michael Chang blog main page
+permalink: ':title/'
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "" # the base hostname & protocol for your site, e.g. http://example.com
+site-twitter: https://twitter.com/dks50217
+# Author Settings
+author: Michael Chang # add your name
+author-img: michael-chang.jpg # add your photo
+about-author: 目前是位後端工程師，但也接觸全端開發，前端善用Vue，後端使用C#開發Web API，同時也具有DB效能調效經驗。
+social-twitter: dks50217
+social-facebook: dks50217
+social-github: dks50217
+social-linkedin: 家豪-張-03542b155
+social-email: dks50217@gmail.com
+
+# Disqus
+discus-identifier: dks50217 # add your discus identifier
+
+# Tracker
+analytics: UA-158793822-1 # Google Analytics
+
+# Build Settings
+markdown: kramdown
+plugins:
+  - jekyll-sitemap
+  - jekyll-paginate
+  - jemoji
+
+paginate: 8
+paginate_path: "/page/:num"
+
+exclude: ["node_modules", "gulpfile.js", "package.json", "yarn.lock"]
