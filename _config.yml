@@ -1,4 +1,4 @@
-title: Blog
+title: Michael's Blog
 description: > # this means to ignore newlines until "baseurl:"
   This is Michael Chang blog main page
 permalink: ':title/'

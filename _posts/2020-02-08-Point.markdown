@@ -27,33 +27,38 @@ $$ID = \log_2 (\frac{2D}{W})$$
 <p align="center">
   <img src="../assets/img/FittsLaw/Fitt's.png">
 </p>
+<p align="center">圖片來源：維基百科</p>
 
 
-這項公式經由多項研究發展後，演變為下圖的衡量績效方式，兩目標物的距離變為24個項目所組成的圓形，目標物寬度 W 變為每個圓形，單位為Pixel公式如下:
+這項公式經由多項研究發展後，演變為下圖的衡量績效方式，兩目標物的距離變為24個項目所組成的圓形，目標物寬度 W 變為每個圓形(單位為Pixel)，公式如下:
 
 $$ID = \log_2 (\frac{2D}{W}+1)$$
 
 ``` bash
-本工具是基於以上的計算公式來開發，每次可以自訂要設定目標物寬度與兩目標物的距離，任務完成後，會計算出本次操作所得出的輸出量。
+本工具即是基於以上的計算公式來開發，每次可以自訂要設定目標物寬度與兩目標物的距離，任務完成後，會計算出本次操作所得出的輸出量。
 ```
 ## 程式簡介
 
 2D 版本
->WinForm開發，點擊Start中心點後，依序將各方塊滑動點擊完畢，結束後統計耗時，計算輸出量。
-
 <p align="center">
   <img src="../assets/img/FittsLaw/Point2.jpg">
 </p>
 
-3D 版本
->Unity 3D 開發，由中心點出發，將白色的圓球依序拖至紅色圓球後放置，結束後計算輸出量。
+<p align="center">WinForm開發，點擊Start中心點後，依序將各方塊滑動點擊完畢，結束後統計耗時，計算輸出量。</p>
 
+3D 版本
 <p align="center">
   <img src="../assets/img/FittsLaw/Point3.jpg">
 </p>
+<p align="center">Unity 3D 開發，由中心點出發，將白色的圓球依序拖至紅色圓球後放置，結束後計算輸出量。</p>
 
 前端復刻版本
->前端Demo版，可設定 D 與 W 值 可算出ID值後產生畫面，即可操作。
+<p align="center">
+  <img src="../assets/img/FittsLaw/Point4.jpg">
+</p>
+<p align="center">前端Demo版，可設定 D 與 W 值 可算出ID值後產生畫面，即可操作。</p>
+
+
 
 
 
