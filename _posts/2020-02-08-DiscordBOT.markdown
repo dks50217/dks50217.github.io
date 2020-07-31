@@ -3,8 +3,8 @@ layout: post
 title: 多功能DiscordBOT在GCP
 date: 2020-02-08 10:00:00 +0300
 description: 使用Node.js建立可新刪修回話的機器人，並且部屬至GCP中
-img: DiscordBOT.jpg # Add image post (optional)
-tags: [tmux, GCP, Discord] # add tag
+img: DiscordBOT.jpg
+tags: [tmux, GCP, Discord,Node.js]
 ---
 有用過Discord的人多少都會聽過MEE6這個機器人，可以在聊天室中加入前餟符號(如驚嘆號)+某字，機器人便會隨機回話，增加聊天室的趣味性
 
@@ -122,6 +122,37 @@ tags: [tmux, GCP, Discord] # add tag
   
   <img src="../assets/img/DiscordBOT/discordBOT_11.jpg">
 
+
+* 新增提醒清單
+
+    以某線上遊戲為例，每天都會有 "聖物" 要搶，聖物放置後會有安定時間，需等安定時間過後才能再搶，因此發想了提示功能，也可替換為其它文字，看要如何運用。
+    只需輸入以下文字格式，前綴為$
+
+    ```
+    ${想要輸入的文字1} {想要輸入的文字2} {hhmm}
+    ```
+
+    如果有多個，可以輸入如下
+
+    ```
+    $紅叢林 槍香火杯1837
+    藍阿姆 甲1838
+    藍沙漠 雙杖.甲1847
+    紅KC 水1850
+    紅KC 杯1902
+    藍阿姆 LV2珠1907
+    紅沙漠 秤1943
+    紅叢林 LV2經1945
+    黃沙漠 盾2013
+    紅阿姆 LV2弓2024
+    ```
+
+    就會依據設定提醒時間發布於頻道中，且快到的項目才會做提醒
+
+    <img src="../assets/img/DiscordBOT/discordBOT_15.jpg">
+
+
+
 * 使用tmux / 架設置GCP中
 
   <img src="../assets/img/DiscordBOT/discordBOT_14.jpg">
@@ -144,7 +175,8 @@ tags: [tmux, GCP, Discord] # add tag
 |               |                | #[mouse]         | 預設回復已開啟/關閉(預設為開啟)
 |               |                | #[replay] OOO     | 預設回復已更改為OOO
 |               |                | #[ignoreAdd] OOO     | XXX 已加入忽略清單(忽略+文字)
-|%              | ChangeWeight   | %可撥 我就可撥 1.2| 可撥,我就可撥 已設定為1.2
+|$             | Add Remind List | $XXX OO1600| 已加入X筆
+|%             | ChangeWeight   | %可撥 我就可撥 1.2| 可撥,我就可撥 已設定為1.2
 |?             | Show help      |               |
 
 

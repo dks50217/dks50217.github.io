@@ -7,7 +7,9 @@ img: PMS-1.jpg # Add image post (optional)
 fig-caption: # Add figcaption (optional)
 tags: [C#,Entity Framework,JQuery,MSSQL]
 ---
-具即時性專案報表、工作看板、快速匯入專案工作、分配工作等功能
 
-頁面建立中...
+## 簡介
+具即時性專案報表、工作看板、快速匯入專案工作、分配工作等功能...是資策會團隊專題，跟企業合作作品，僅有DEMO權限
+
+<img src="../assets/img/PMS/PMS-1.png">
 
