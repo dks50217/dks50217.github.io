@@ -1,0 +1,13 @@
+---
+layout: post
+title: 類神經網路於Python實作
+date: 2020-02-08 00:00:00 +0000
+description:  類神經網路於Python實作
+img: EDM.jpg 
+fig-caption:
+tags: [Deep Neural Net]
+---
+
+頁面建立中...
+應該會拿研究所做過的類神經專案來試試
+
