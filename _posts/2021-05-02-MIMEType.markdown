@@ -1,0 +1,24 @@
+---
+layout: post
+title: 在NET CORE MVC專案下加入Vue MIMEType
+date: 2021-05-02 00:00:00 +0000
+description:  在NET CORE MVC專案下加入Vue MIMEType
+img: 
+fig-caption:
+tags: [MIMEType,.NET CORE]
+---
+
+以往在 .NET Framework 中引用Vue時，需添加MIMEType在AppSetting
+在.NET CORE 中，只需要加入以下幾行在Startup.cs中
+
+```c#
+// 添加mimeType
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".vue"] = "application/javascript";
+app.UseStaticFiles(new StaticFileOptions
+{
+    ContentTypeProvider = provider
+});
+```
+
+
