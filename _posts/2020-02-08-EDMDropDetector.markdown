@@ -1,7 +1,7 @@
 ---
 layout: post
 title: 電子音樂 Drop 分類器
-date: 2020-07-30 18:00:00 +0000
+date: 2021-01-01 18:00:00 +0000
 description:  電子音樂 Drop 分類
 img: EDM.jpg 
 fig-caption:
