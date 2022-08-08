@@ -11,6 +11,7 @@ tags: [MIMEType,.NET CORE]
 以往在 .NET Framework 中引用Vue時，需添加MIMEType在AppSetting
 在.NET CORE 中，只需要加入以下幾行在Startup.cs中
 
+.NET CORE 一般專案
 ```c#
 // 添加mimeType
 var provider = new FileExtensionContentTypeProvider();
@@ -18,6 +19,20 @@ provider.Mappings[".vue"] = "application/javascript";
 app.UseStaticFiles(new StaticFileOptions
 {
     ContentTypeProvider = provider
+});
+```
+
+.NET Minimal API
+```c#
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".vue"] = "application/javascript";
+app.UseFileServer(new FileServerOptions {
+    RequestPath = "",
+    FileProvider = new Microsoft.Extensions.FileProviders
+                    .ManifestEmbeddedFileProvider(typeof(Program).Assembly, "wwwroot"),
+    StaticFileOptions = {
+        ContentTypeProvider = provider
+    }
 });
 ```
 
