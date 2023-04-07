@@ -2,11 +2,11 @@
 <html lang="zh">
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" href="favicon.ico" />
+    <link rel="icon" href="./favicon.ico" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>首頁</title>
-    <script type="module" crossorigin src="assets/js/index.js"></script>
-    <link rel="stylesheet" href="assets/css/index.css">
+    <title>首页</title>
+    <script type="module" crossorigin src="./assets/js/index.js"></script>
+    <link rel="stylesheet" href="./assets/css/index.css">
   </head>
   <body>
     <div id="app"></div>
@@ -15,7 +15,7 @@
         display: none;
       }
     </style>
-    <div id="unlocked" class="unlocked" v-cloak><h2>🔓 已解除鎖定 (你需要將此懸浮窗鎖定後方可使用)</h2></div>
+    <div id="unlocked" class="unlocked" v-cloak><h2>🔓 已解除锁定 (你需要将此悬浮窗锁定后方可使用)</h2></div>
     <script>
       document.addEventListener("onOverlayStateUpdate", (e) => {
         const unlocked = document.getElementById("unlocked");
