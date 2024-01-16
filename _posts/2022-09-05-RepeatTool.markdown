@@ -105,7 +105,23 @@ if box is None:
 [FFXIV_Cook_Guildleve](https://github.com/dks50217/FFXIV_Cook_Guildleve)
 
 
+## 附加! 直接抓FFXIV的Process來執行腳本
 
+為考慮到我僅擁有單一螢幕，且不希望腳本運行佔據我的螢幕空間，我開發了一個新的UI腳本工具。如下圖所示，使用者可以透過UI編輯腳本，然後直接在FFXIV視窗中執行。
+
+<img src="../assets/img/FFXIV/demo.gif">
+
+- 可透過UI拖曳改變執行順序，儲存腳本
+  - 若所選類型為 [Text]，則訊息將傳送至遊戲對話框。
+  - 若所選類型為 [Button]，則按鈕將被傳送至遊戲視窗。
+  - 設定執行次數
+  - 設定執行N次後中途插入額外腳本
+
+<img src="../assets/img/FFXIV/UI.jpg">
+
+這樣腳本工具更具有彈性了
+後續只要透過UI修改腳本即可，小工具Repo如以下連結
+[FFXIVMacroController](https://github.com/dks50217/FFXIVMacroController)
 
 
 

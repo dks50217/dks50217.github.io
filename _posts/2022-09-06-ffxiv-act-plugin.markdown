@@ -80,6 +80,7 @@ public partial class UserControl1 : UserControl, IActPluginV1
         string[] logLine = logInfo.originalLogLine.Split('|');
         this.lblChatLog.Text = string.Join(", ", logLine.Select(x => $"\"{x}\""));
     }
+}
 
 ```
 
