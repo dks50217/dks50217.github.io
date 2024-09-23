@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>仙人掌計算器</title>
+    <link rel="icon" type="image/x-icon" href="cactus.ico">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
+        <h1 class="text-2xl font-bold mb-4">仙人掌計算器</h1>
+        <div class="space-y-4">
+            <div>
+                <label for="productTypes" class="block text-sm font-medium text-gray-700">商品種類數量：</label>
+                <input type="number" id="productTypes" min="1" value="9" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+            </div>
+            <div>
+                <label for="maxPerType" class="block text-sm font-medium text-gray-700">單一商品每批次最大數量：</label>
+                <input type="number" id="maxPerType" min="1" value="12" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+            </div>
+            <div>
+                <label for="maxPerBatch" class="block text-sm font-medium text-gray-700">每批次最大總數：</label>
+                <input type="number" id="maxPerBatch" min="1" value="36" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+            </div>
+            <div id="productInputs"></div>
+            <button onclick="generateProductInputs()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                生成商品輸入欄位
+            </button>
+            <button onclick="calculate()" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                計算
+            </button>
+        </div>
+        <div id="result" class="mt-6"></div>
+    </div>
+
+    <script>
+        function generateProductInputs() {
+            const productTypes = parseInt(document.getElementById('productTypes').value);
+            const productInputs = document.getElementById('productInputs');
+            productInputs.innerHTML = '';
+            for (let i = 0; i < productTypes; i++) {
+                const input = document.createElement('div');
+                input.innerHTML = `
+                    <label for="product${i}" class="block text-sm font-medium text-gray-700">商品 ${i + 1} 數量：</label>
+                    <input type="number" id="product${i}" min="0" value="12" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
+                `;
+                productInputs.appendChild(input);
+            }
+        }
+
+        function calculate() {
+            const productTypes = parseInt(document.getElementById('productTypes').value);
+            const maxPerType = parseInt(document.getElementById('maxPerType').value);
+            const maxPerBatch = parseInt(document.getElementById('maxPerBatch').value);
+            let products = [];
+            for (let i = 0; i < productTypes; i++) {
+                products.push(parseInt(document.getElementById(`product${i}`).value));
+            }
+
+            let batchCount = 0;
+            let resultHTML = '';
+
+            while (products.reduce((a, b) => a + b, 0) > 0) {
+                let currentBatch = 0;
+                batchCount++;
+                resultHTML += `<p class="font-bold">批次 ${batchCount}:</p>`;
+
+                for (let i = 0; i < productTypes; i++) {
+                    if (products[i] > 0) {
+                        const toShip = Math.min(Math.min(products[i], maxPerType), maxPerBatch - currentBatch);
+                        if (toShip > 0) {
+                            products[i] -= toShip;
+                            currentBatch += toShip;
+                            resultHTML += `<p>商品 ${i + 1}: ${toShip} 個</p>`;
+                        }
+                    }
+                    if (currentBatch >= maxPerBatch) break;
+                }
+                resultHTML += `<p>批次總數: ${currentBatch}</p><br>`;
+            }
+
+            resultHTML += `<p class="font-bold">需要的總批次數: ${batchCount}</p>`;
+            document.getElementById('result').innerHTML = resultHTML;
+        }
+
+        // 初始化頁面時生成商品輸入欄位
+        generateProductInputs();
+    </script>
+</body>
+</html>
