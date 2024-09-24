@@ -1,52 +1,141 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仙人掌計算器</title>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        input[type="number"] {
+            width: 60px;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+    </style>
 </head>
 <body>
-    <h1>仙人掌計算器</h1>
-    
-    <label for="healthProduct">保健品數量：</label>
-    <input type="number" id="healthProduct" value="0"><br><br>
-    
-    <label for="medicine">藥品數量：</label>
-    <input type="number" id="medicine" value="0"><br><br>
+    <div id="app">
+        <h1>仙人掌計算器</h1>
 
-    <label for="otherProduct">其他商品數量：</label>
-    <input type="number" id="otherProduct" value="0"><br><br>
-    
-    <button onclick="calculateBatches()">計算批次</button>
-    
-    <h3>所需批次：</h3>
-    <p id="result"></p>
+        <div style="margin:20px;">
+            <button @click="addproduct">新增產品</button>
+
+        </div>
+
+        <table>
+            <thead>
+                <tr>
+                    <th>商品名稱</th>
+                    <th>數量</th>
+                    <th>類型</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(product, index) in products" :key="index">
+                    <td>{{ product.name }}</td>
+                    <td><input type="number" v-model.number="product.quantity" min="0"></td>
+                    <td>
+                        <select v-model="product.type">
+                            <option value="藥品">藥品</option>
+                            <option value="保健食品">保健食品</option>
+                        </select>
+                    </td>
+                    <td><button @click="deleteproduct(index)">刪除</button></td>
+                </tr>
+            </tbody>
+        </table>
+        <button @click="calculateBatches">計算批次</button>
+        <div class="result" v-if="batches.length">
+            <h2>運送批次 (共 {{ batches.length }} 批)</h2>
+            <!-- <div v-for="(batch, batchIndex) in batches" :key="batchIndex">
+                <p>
+                    <strong>批次 {{ batchIndex + 1 }}</strong>:<br>
+                    <template v-for="(item, itemIndex) in batch">
+                        - {{ item.name }} ({{ item.quantity }}個)<br>
+                    </template>
+                </p>
+            </div> -->
+        </div>
+    </div>
 
     <script>
-        function calculateBatches() {
+        new Vue({
+            el: '#app',
+            data: {
+                products: [
+                    { name: '產品A', quantity: 36, type: '藥品' },
+                    { name: '產品B', quantity: 36, type: '保健食品' },
+                    { name: '產品C', quantity: 36, type: '藥品' }
+                ],
+                batches: []
+            },
+            methods: {
+                deleteproduct(index){
+                    this.products.splice(index, 1);
+                },
+                addproduct(){
+                    const randomName = '產品 ' + Math.random().toString(36).substring(7);
+                    this.products.push({ name: randomName, quantity: 0, type: '藥品' });
+                },
+                calculateBatches() {
+                    this.batches = [];
+                    let currentBatch = [];
+                    let currentBatchTotal = 0;
+    
+                    for (let product of this.products) {
+                        let remainingQty = product.quantity;
+                        let maxQtyPerBatch = product.type === '保健食品' ? 12 : 2;
+    
+                        while (remainingQty > 0) {
+                            let qtyToAdd = Math.min(remainingQty, maxQtyPerBatch);
+    
+                            let maxTotal = product.type === '保健食品' ? 36 : 12;
 
-            let healthProduct = parseInt(document.getElementById('healthProduct').value);
-            let medicine = parseInt(document.getElementById('medicine').value);
-            let otherProduct = parseInt(document.getElementById('otherProduct').value);
-
-            let healthProductBatches = Math.ceil(healthProduct / 36);
-
-            let medicineBatches = Math.ceil(medicine / 12);
-
-            let otherProductBatches = Math.ceil(otherProduct / 36);
-
-            let mixedBatches = Math.ceil((healthProduct + medicine) / 48);
-
-            let totalBatches = mixedBatches + otherProductBatches;
-
-            let result = `保健品批次: ${healthProductBatches} 批次<br>` +
-                         `藥品批次: ${medicineBatches} 批次<br>` +
-                         `其他商品批次: ${otherProductBatches} 批次<br>` +
-                         `混搭批次（保健品+藥品）: ${mixedBatches} 批次<br><br>` +
-                         `總批次: ${totalBatches} 批次`;
-
-            document.getElementById('result').innerHTML = result;
-        }
+                            if (currentBatchTotal + qtyToAdd > maxTotal) {
+                                this.batches.push(currentBatch);
+                                currentBatch = [];
+                                currentBatchTotal = 0;
+                            }
+    
+                            currentBatch.push({ name: product.name, quantity: qtyToAdd, type: product.type });
+                            currentBatchTotal += qtyToAdd;
+                            remainingQty -= qtyToAdd;
+                        }
+                    }
+    
+                    if (currentBatch.length > 0) {
+                        this.batches.push(currentBatch);
+                    }
+                }
+            }
+        });
     </script>
 </body>
 </html>
