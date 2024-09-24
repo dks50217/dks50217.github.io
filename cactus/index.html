@@ -1,91 +1,52 @@
 <!DOCTYPE html>
-<html lang="zh-TW">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>仙人掌計算器</title>
-    <link rel="icon" type="image/x-icon" href="cactus.ico">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.js"></script>
 </head>
-<body class="bg-gray-100 p-8">
-    <div class="max-w-md mx-auto bg-white rounded-xl shadow-md overflow-hidden md:max-w-2xl p-6">
-        <h1 class="text-2xl font-bold mb-4">仙人掌計算器</h1>
-        <div class="space-y-4">
-            <div>
-                <label for="productTypes" class="block text-sm font-medium text-gray-700">商品種類數量：</label>
-                <input type="number" id="productTypes" min="1" value="9" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div>
-                <label for="maxPerType" class="block text-sm font-medium text-gray-700">單一商品每批次最大數量：</label>
-                <input type="number" id="maxPerType" min="1" value="12" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div>
-                <label for="maxPerBatch" class="block text-sm font-medium text-gray-700">每批次最大總數：</label>
-                <input type="number" id="maxPerBatch" min="1" value="36" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-            </div>
-            <div id="productInputs"></div>
-            <button onclick="generateProductInputs()" class="w-full bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                生成商品輸入欄位
-            </button>
-            <button onclick="calculate()" class="w-full bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-                計算
-            </button>
-        </div>
-        <div id="result" class="mt-6"></div>
-    </div>
+<body>
+    <h1>仙人掌計算器</h1>
+    
+    <label for="healthProduct">保健品數量：</label>
+    <input type="number" id="healthProduct" value="0"><br><br>
+    
+    <label for="medicine">藥品數量：</label>
+    <input type="number" id="medicine" value="0"><br><br>
+
+    <label for="otherProduct">其他商品數量：</label>
+    <input type="number" id="otherProduct" value="0"><br><br>
+    
+    <button onclick="calculateBatches()">計算批次</button>
+    
+    <h3>所需批次：</h3>
+    <p id="result"></p>
 
     <script>
-        function generateProductInputs() {
-            const productTypes = parseInt(document.getElementById('productTypes').value);
-            const productInputs = document.getElementById('productInputs');
-            productInputs.innerHTML = '';
-            for (let i = 0; i < productTypes; i++) {
-                const input = document.createElement('div');
-                input.innerHTML = `
-                    <label for="product${i}" class="block text-sm font-medium text-gray-700">商品 ${i + 1} 數量：</label>
-                    <input type="number" id="product${i}" min="0" value="12" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2">
-                `;
-                productInputs.appendChild(input);
-            }
+        function calculateBatches() {
+
+            let healthProduct = parseInt(document.getElementById('healthProduct').value);
+            let medicine = parseInt(document.getElementById('medicine').value);
+            let otherProduct = parseInt(document.getElementById('otherProduct').value);
+
+            let healthProductBatches = Math.ceil(healthProduct / 36);
+
+            let medicineBatches = Math.ceil(medicine / 12);
+
+            let otherProductBatches = Math.ceil(otherProduct / 36);
+
+            let mixedBatches = Math.ceil((healthProduct + medicine) / 48);
+
+            let totalBatches = mixedBatches + otherProductBatches;
+
+            let result = `保健品批次: ${healthProductBatches} 批次<br>` +
+                         `藥品批次: ${medicineBatches} 批次<br>` +
+                         `其他商品批次: ${otherProductBatches} 批次<br>` +
+                         `混搭批次（保健品+藥品）: ${mixedBatches} 批次<br><br>` +
+                         `總批次: ${totalBatches} 批次`;
+
+            document.getElementById('result').innerHTML = result;
         }
-
-        function calculate() {
-            const productTypes = parseInt(document.getElementById('productTypes').value);
-            const maxPerType = parseInt(document.getElementById('maxPerType').value);
-            const maxPerBatch = parseInt(document.getElementById('maxPerBatch').value);
-            let products = [];
-            for (let i = 0; i < productTypes; i++) {
-                products.push(parseInt(document.getElementById(`product${i}`).value));
-            }
-
-            let batchCount = 0;
-            let resultHTML = '';
-
-            while (products.reduce((a, b) => a + b, 0) > 0) {
-                let currentBatch = 0;
-                batchCount++;
-                resultHTML += `<p class="font-bold">批次 ${batchCount}:</p>`;
-
-                for (let i = 0; i < productTypes; i++) {
-                    if (products[i] > 0) {
-                        const toShip = Math.min(Math.min(products[i], maxPerType), maxPerBatch - currentBatch);
-                        if (toShip > 0) {
-                            products[i] -= toShip;
-                            currentBatch += toShip;
-                            resultHTML += `<p>商品 ${i + 1}: ${toShip} 個</p>`;
-                        }
-                    }
-                    if (currentBatch >= maxPerBatch) break;
-                }
-                resultHTML += `<p>批次總數: ${currentBatch}</p><br>`;
-            }
-
-            resultHTML += `<p class="font-bold">需要的總批次數: ${batchCount}</p>`;
-            document.getElementById('result').innerHTML = resultHTML;
-        }
-
-        // 初始化頁面時生成商品輸入欄位
-        generateProductInputs();
     </script>
 </body>
 </html>
