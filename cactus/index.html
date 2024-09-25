@@ -90,9 +90,9 @@
             el: '#app',
             data: {
                 products: [
-                    { name: '產品A', quantity: 36, type: '藥品' },
+                    { name: '產品A', quantity: 36, type: '保健食品' },
                     { name: '產品B', quantity: 36, type: '保健食品' },
-                    { name: '產品C', quantity: 36, type: '藥品' }
+                    { name: '產品C', quantity: 36, type: '保健食品' }
                 ],
                 batches: []
             },
@@ -112,13 +112,12 @@
                     for (let product of this.products) {
                         let remainingQty = product.quantity;
                         let maxQtyPerBatch = product.type === '保健食品' ? 12 : 2;
+                        let maxTotal = 36;
     
                         while (remainingQty > 0) {
                             let qtyToAdd = Math.min(remainingQty, maxQtyPerBatch);
     
-                            let maxTotal = product.type === '保健食品' ? 36 : 12;
-
-                            if (currentBatchTotal + qtyToAdd > maxTotal) {
+                            if (currentBatchTotal + qtyToAdd > maxTotal || currentBatchTotal + qtyToAdd > 48) {
                                 this.batches.push(currentBatch);
                                 currentBatch = [];
                                 currentBatchTotal = 0;
