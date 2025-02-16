@@ -1,1 +1,0 @@
-import{d as e,v as t,x as o,G as s}from"./index.js";const n=s("h1",null,"test",-1),a=[n],p=e({__name:"test",props:{modelValue:{type:Boolean}},setup(_){return(c,l)=>(t(),o("div",null,a))}});export{p as default};
