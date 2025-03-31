@@ -149,6 +149,10 @@ Predictions:
 * country
 * etc..
 
+## 演示用程式
+
+[SpeciesNetDemo](https://github.com/dks50217/SpeciesNetDemo)
+
 
 #### 參考資料
 - https://github.com/google/cameratrapai?tab=readme-ov-file
