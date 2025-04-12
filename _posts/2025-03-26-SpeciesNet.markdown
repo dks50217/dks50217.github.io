@@ -80,7 +80,7 @@ python -m speciesnet.scripts.run_model --folders "{需要辨識的圖片來源�
 <img src="../assets/img/SpeciesNet/SpeciesNet-3.png">
 
 
-2. 結果如下，把結果先丟給ChatGPT分析prediction區塊看來查看其含義
+2. 以某張圖為範例結果如下，把結果先丟給ChatGPT分析prediction區塊看來查看其含義
 
 
 ### 分類階層解析（從大到小）
@@ -142,12 +142,15 @@ Predictions:
 }
 ```
 
+從json內可以看到有bbox(bounding box)標示出動物邊界框，我們以畫面帶出
+
+
+<img src="../assets/img/SpeciesNet/SpeciesNet-4.png">
+
+
 ## 其餘應用待補
 
-* bbox area
-* admin1_region
-* country
-* etc..
+* 使用GPU
 
 ## 演示用程式
 
