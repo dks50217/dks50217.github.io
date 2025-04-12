@@ -102,39 +102,39 @@ python -m speciesnet.scripts.run_model --folders "{需要辨識的圖片來源�
 Predictions:
 {
     "predictions": [
-        {
-            "filepath": "image/demo.JPG",
+                {
+            "filepath": "image/american_black_bear.jpg",
             "classifications": {
                 "classes": [
-                    "18188307-3bda-4990-84eb-893863202d22;mammalia;carnivora;herpestidae;herpestes;urva;crab-eating mongoose",
-                    "341cda2b-34df-4391-a61e-ba063bbe2f9a;mammalia;carnivora;herpestidae;herpestes;ichneumon;egyptian mongoose",
-                    "37b83705-ecdf-406d-923a-12a736fd56f3;mammalia;carnivora;herpestidae;ichneumia;albicauda;white-tailed mongoose",
-                    "f1f22711-ef94-4cf8-a051-128182debc01;mammalia;carnivora;herpestidae;herpestes;smithii;ruddy mongoose",
-                    "86f5b978-4f30-40cc-bd08-be9e3fba27a0;mammalia;rodentia;sciuridae;sciurus;carolinensis;eastern gray squirrel"
+                    "436ddfdd-bc43-44c3-a25d-34671d3430a0;mammalia;carnivora;ursidae;ursus;americanus;american black bear",
+                    "febff896-db40-4ac8-bcfe-5bb99a600950;mammalia;cetartiodactyla;cervidae;odocoileus;hemionus;mule deer",
+                    "5c7ce479-8a45-40b3-ae21-7c97dfae22f5;mammalia;cetartiodactyla;cervidae;odocoileus;virginianus;white-tailed deer",
+                    "eb3829b0-772e-4088-ae90-f11b9fe38284;mammalia;cetartiodactyla;cervidae;cervus;elaphus;red deer",
+                    "330bb1e9-84d6-4e41-afa9-938aee17ea29;mammalia;carnivora;ursidae;ursus;arctos;brown bear"
                 ],
                 "scores": [
-                    0.9012179374694824,
-                    0.05760936066508293,
-                    0.004107112064957619,
-                    0.003590901382267475,
-                    0.0035770961549133062
+                    0.9895798563957214,
+                    0.003979037050157785,
+                    0.0037781514693051577,
+                    0.0007601650431752205,
+                    0.0005046064616180956
                 ]
             },
             "detections": [
                 {
                     "category": "1",
                     "label": "animal",
-                    "conf": 0.9165332913398743,
+                    "conf": 0.9598512053489685,
                     "bbox": [
-                        0.5145527124404907,
-                        0.22821350023150444,
-                        0.12545955181121826,
-                        0.09449891000986099
+                        0.43310546875,
+                        0.4283854365348816,
+                        0.3232421875,
+                        0.322265625
                     ]
                 }
             ],
-            "prediction": "18188307-3bda-4990-84eb-893863202d22;mammalia;carnivora;herpestidae;herpestes;urva;crab-eating mongoose",
-            "prediction_score": 0.9012179374694824,
+            "prediction": "436ddfdd-bc43-44c3-a25d-34671d3430a0;mammalia;carnivora;ursidae;ursus;americanus;american black bear",
+            "prediction_score": 0.9895798563957214,
             "prediction_source": "classifier",
             "model_version": "4.0.0a"
         }
