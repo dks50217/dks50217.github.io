@@ -167,72 +167,79 @@ species_model.summary()
 
 2. 微調模型 
 
-* dataset 放入新類別物種、非新類別物種訓練
 
 ```python
 import os
+import numpy as np
 import tensorflow as tf
+from tensorflow.keras.models import load_model
+from tensorflow.keras import layers, Model
+from tensorflow.keras.preprocessing.image import ImageDataGenerator
 import kagglehub
-from tensorflow.keras import layers, models
+import json
 
-DATASET_DIR = "dataset"
+path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
+model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
 
+NEW_CLASS_NAME = "taiwan_black_bear"
+NEW_DATASET_DIR = "dataset/taiwan_black_bear"
 IMAGE_SIZE = (480, 480)
-BATCH_SIZE = 16
-NUM_CLASSES = 2
+BATCH_SIZE = 8
 EPOCHS = 10
 
 print("[INFO] Loading base model...")
+base_model = load_model(model_file)
 
-path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
+old_dense_layer = base_model.layers[-1]
+old_weights, old_bias = old_dense_layer.get_weights()
 
-model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
-base_model = tf.keras.models.load_model(model_file)
-x = base_model.layers[-2].output  # dropout 輸出
+original_class_count = old_weights.shape[1]
+new_class_count = original_class_count + 1
 
-print("[INFO] Building new model...")
-x = layers.Dense(256, activation='relu', name="custom_dense")(x)
-x = layers.Dropout(0.3, name="custom_dropout")(x)
-output = layers.Dense(NUM_CLASSES, activation='softmax', name="custom_output")(x)
+new_weights = np.concatenate(
+    [old_weights, np.random.normal(size=(old_weights.shape[0], 1))],
+    axis=1
+)
 
-model = tf.keras.Model(inputs=base_model.input, outputs=output)
+new_bias = np.concatenate(
+    [old_bias, np.array([0.0])]
+)
 
-print("[INFO] Freezing base model layers...")
-for layer in base_model.layers:
+x = base_model.layers[-2].output
+new_output = layers.Dense(new_class_count, activation='softmax', name="expanded_output")(x)
+
+model = Model(inputs=base_model.input, outputs=new_output)
+
+model.get_layer("expanded_output").set_weights([new_weights, new_bias])
+
+for layer in model.layers[:-1]:
     layer.trainable = False
 
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
+datagen = ImageDataGenerator(rescale=1.0/255)
 
-print("[INFO] Loading dataset...")
-train_ds = tf.keras.preprocessing.image_dataset_from_directory(
-    DATASET_DIR,
-    image_size=IMAGE_SIZE,
-    batch_size=BATCH_SIZE
-)
+def generate_bear_dataset(path):
+    class_label = new_class_count - 1
+    filenames = [os.path.join(path, f) for f in os.listdir(path) if f.lower().endswith((".jpg", ".png"))]
+    images = []
+    labels = []
+    for f in filenames:
+        img = tf.keras.utils.load_img(f, target_size=IMAGE_SIZE)
+        img_array = tf.keras.utils.img_to_array(img) / 255.0
+        images.append(img_array)
+        labels.append(class_label)
+    return np.array(images), np.array(labels)
 
-print("[INFO] Starting training...")
-model.fit(train_ds, epochs=EPOCHS)
+X_train, y_train = generate_bear_dataset(NEW_DATASET_DIR)
 
 
-print("[INFO] Unfreezing base model for fine-tuning...")
-for layer in base_model.layers:
-    layer.trainable = True
+model.compile(optimizer=tf.keras.optimizers.Adam(1e-4),
+              loss='sparse_categorical_crossentropy',
+              metrics=['accuracy'])
 
-model.compile(
-    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
-    loss='sparse_categorical_crossentropy',
-    metrics=['accuracy']
-)
+model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS)
 
-print("[INFO] Fine-tuning...")
-model.fit(train_ds, epochs=5)
 
-model.save("fine_tuned_speciesnet_model.keras")
-print("[INFO] Model saved to fine_tuned_speciesnet_model.keras")
+model.save("speciesnet_with_bear.keras")
 ```
 
 
