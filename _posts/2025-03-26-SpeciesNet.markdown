@@ -148,6 +148,93 @@ Predictions:
 
 <img src="../assets/img/SpeciesNet/SpeciesNet-4.png">
 
+## 微調模型
+
+1. 從kaggle下載模型至本地端查看模型結構
+
+```python
+path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
+
+model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
+
+species_model = tf.keras.models.load_model(model_file)
+
+species_model.summary()
+```
+
+
+<img src="../assets/img/SpeciesNet/SpeciesNet-5.png">
+
+2. 微調模型 
+
+* dataset 放入新類別物種、非新類別物種訓練
+
+```python
+import os
+import tensorflow as tf
+import kagglehub
+from tensorflow.keras import layers, models
+
+DATASET_DIR = "dataset"
+
+IMAGE_SIZE = (480, 480)
+BATCH_SIZE = 16
+NUM_CLASSES = 2
+EPOCHS = 10
+
+print("[INFO] Loading base model...")
+
+path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
+
+model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
+base_model = tf.keras.models.load_model(model_file)
+x = base_model.layers[-2].output  # dropout 輸出
+
+print("[INFO] Building new model...")
+x = layers.Dense(256, activation='relu', name="custom_dense")(x)
+x = layers.Dropout(0.3, name="custom_dropout")(x)
+output = layers.Dense(NUM_CLASSES, activation='softmax', name="custom_output")(x)
+
+model = tf.keras.Model(inputs=base_model.input, outputs=output)
+
+print("[INFO] Freezing base model layers...")
+for layer in base_model.layers:
+    layer.trainable = False
+
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-4),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+print("[INFO] Loading dataset...")
+train_ds = tf.keras.preprocessing.image_dataset_from_directory(
+    DATASET_DIR,
+    image_size=IMAGE_SIZE,
+    batch_size=BATCH_SIZE
+)
+
+print("[INFO] Starting training...")
+model.fit(train_ds, epochs=EPOCHS)
+
+
+print("[INFO] Unfreezing base model for fine-tuning...")
+for layer in base_model.layers:
+    layer.trainable = True
+
+model.compile(
+    optimizer=tf.keras.optimizers.Adam(learning_rate=1e-5),
+    loss='sparse_categorical_crossentropy',
+    metrics=['accuracy']
+)
+
+print("[INFO] Fine-tuning...")
+model.fit(train_ds, epochs=5)
+
+model.save("fine_tuned_speciesnet_model.keras")
+print("[INFO] Model saved to fine_tuned_speciesnet_model.keras")
+```
+
 
 ## 其餘應用待補
 
