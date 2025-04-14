@@ -169,56 +169,57 @@ species_model.summary()
 
 
 ```python
-import os
-import numpy as np
-import tensorflow as tf
-from tensorflow.keras.models import load_model
-from tensorflow.keras import layers, Model
-from tensorflow.keras.preprocessing.image import ImageDataGenerator
-import kagglehub
-import json
 
 path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
+
 model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
 
+print(model_file);
+
 NEW_CLASS_NAME = "taiwan_black_bear"
-NEW_DATASET_DIR = "dataset/taiwan_black_bear"
+LABELS_TXT_PATH =  os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.labels.txt")
+NEW_DATASET_DIR = "dataset/taiwan_black_bear" 
 IMAGE_SIZE = (480, 480)
 BATCH_SIZE = 8
 EPOCHS = 10
 
+
 print("[INFO] Loading base model...")
 base_model = load_model(model_file)
 
+print("[INFO] Extracting old dense weights...")
 old_dense_layer = base_model.layers[-1]
 old_weights, old_bias = old_dense_layer.get_weights()
 
 original_class_count = old_weights.shape[1]
 new_class_count = original_class_count + 1
 
+print(f"[INFO] Expanding output layer from {original_class_count} to {new_class_count} classes...")
+
 new_weights = np.concatenate(
     [old_weights, np.random.normal(size=(old_weights.shape[0], 1))],
     axis=1
 )
-
 new_bias = np.concatenate(
     [old_bias, np.array([0.0])]
 )
 
-x = base_model.layers[-2].output
+x = base_model.layers[-2].output  # Dropout 輸出層
 new_output = layers.Dense(new_class_count, activation='softmax', name="expanded_output")(x)
 
 model = Model(inputs=base_model.input, outputs=new_output)
+
 
 model.get_layer("expanded_output").set_weights([new_weights, new_bias])
 
 for layer in model.layers[:-1]:
     layer.trainable = False
 
+print("[INFO] Loading new class images...")
 datagen = ImageDataGenerator(rescale=1.0/255)
 
 def generate_bear_dataset(path):
-    class_label = new_class_count - 1
+    class_label = new_class_count - 1  # taiwan_black_bear = 2498
     filenames = [os.path.join(path, f) for f in os.listdir(path) if f.lower().endswith((".jpg", ".png"))]
     images = []
     labels = []
@@ -230,16 +231,36 @@ def generate_bear_dataset(path):
     return np.array(images), np.array(labels)
 
 X_train, y_train = generate_bear_dataset(NEW_DATASET_DIR)
-
+print(f"[INFO] Loaded {len(X_train)} images for class '{NEW_CLASS_NAME}'.")
 
 model.compile(optimizer=tf.keras.optimizers.Adam(1e-4),
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
+print("[INFO] Training on new class only...")
 model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS)
 
-
+print("[INFO] Saving new model as 'speciesnet_with_bear.keras'...")
 model.save("speciesnet_with_bear.keras")
+
+new_uuid = str(uuid.uuid4())
+
+NEW_LABEL_LINE = f"{new_uuid};mammalia;carnivora;ursidae;ursus;thibetanus;taiwan_black_bear"
+
+with open(LABELS_TXT_PATH, "r", encoding="utf-8") as f:
+    lines = f.readlines()
+    if any("taiwan_black_bear" in line for line in lines):
+        print("[INFO] Label for 'taiwan_black_bear' already exists in labels.txt, skipping append.")
+    else:
+        backup_path = LABELS_TXT_PATH + ".backup"
+        if not os.path.exists(backup_path):
+            with open(backup_path, "w", encoding="utf-8") as backup_file:
+                backup_file.writelines(lines)
+            print(f"[INFO] Backup created: {backup_path}")
+
+        with open(LABELS_TXT_PATH, "a", encoding="utf-8") as f_append:
+            f_append.write("\n" + NEW_LABEL_LINE)
+            print(f"[INFO] Appended new class to labels.txt: {new_uuid}")
 ```
 
 
