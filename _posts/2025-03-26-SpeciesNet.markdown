@@ -152,6 +152,10 @@ Predictions:
 
 1. 從kaggle下載模型至本地端查看模型結構
 
+本地路徑
+
+* 
+
 ```python
 path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
 
@@ -264,14 +268,21 @@ with open(LABELS_TXT_PATH, "r", encoding="utf-8") as f:
 ```
 
 
-## 其餘應用待補
+## 使用GPU (以Windows為例)
 
-* 使用GPU
+```bash
+python -m speciesnet.scripts.gpu_test
+pip install torch torchvision --upgrade --force-reinstall --index-url https://download.pytorch.org/whl/cu118
+```
+
+<img src="../assets/img/SpeciesNet/SpeciesNet-6.png">
+
+## 其它應用待補
+
 
 ## 演示用程式
 
 [SpeciesNetDemo](https://github.com/dks50217/SpeciesNetDemo)
-
 
 #### 參考資料
 - https://github.com/google/cameratrapai?tab=readme-ov-file
