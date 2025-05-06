@@ -3,7 +3,7 @@ layout: post
 title: 用 WPF + NetStone + MCP 架構你的 FFXIV 對話式查詢工具
 date: 2025-05-06 00:00:00 +0000
 description: 
-img: SpeciesNet.png
+img: mcp-ffxiv.png
 fig-caption: WPF Chat UI 結合 NetStone 與 MCP 的 FFXIV 對話查詢應用畫面
 tags: [MCP, AI, FFXIV, WPF, NetStone]
 ---
