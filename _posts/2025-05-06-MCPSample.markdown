@@ -1,6 +1,6 @@
 ---
 layout: post
-title: 用 WPF + NetStone + MCP 架構你的 FFXIV 對話式查詢工具
+title: NetStone + MCP 架構你的 FFXIV 對話式查詢工具
 date: 2025-05-06 00:00:00 +0000
 description: 
 img: mcp-ffxiv.png
@@ -167,6 +167,12 @@ private async Task InitializeMCP()
 ## 實際使用效果
 
 <img src="../assets/img/MCP/mcp-client.png">
+
+<br/>
+
+<img src="../assets/img/MCP/sample.png">
+
+翻譯問題需要在MCP Tool內加入對照字典即可解決
 
 ## GitHub 專案連結
 
