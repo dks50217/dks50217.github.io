@@ -2,15 +2,15 @@
 layout: post
 title: NetStone + MCP 架構你的 FFXIV 對話式查詢工具
 date: 2025-05-06 00:00:00 +0000
-description: 
+description: 利用 NetStone 整合 MCP(Model Context Protocol)，打造 FFXIV 專用的 WPF Chat UI 工具，實現角色資訊、物品資料、任務流程等即時查詢對話式互動功能。
 img: mcp-ffxiv.png
-fig-caption: WPF Chat UI 結合 NetStone 與 MCP 的 FFXIV 對話查詢應用畫面
+fig-caption: FFXIV 畫面
 tags: [MCP, AI, FFXIV, WPF, NetStone]
 ---
 
 本篇文章是從零開始打造一個結合 自然語言處理（MCP Server）、FFXIV 資料查詢（NetStone），並以 WPF (MCP Client) 呈現聊天介面的桌面應用程式。你將學會如何：
 
-* 使用 MCP 協定處理聊天語意與工具呼叫
+* 使用 MCP 協定(Model Context Protocol)處理聊天語意與工具呼叫
 * 整合 NetStone 查詢《Final Fantasy XIV》的角色與世界資料
 * 使用 WPF 呈現 ChatGPT 風格的對話框與 Markdown 回應
 
