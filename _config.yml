@@ -1,6 +1,5 @@
 title: Michael's Blog
-description: > # this means to ignore newlines until "baseurl:"
-  This is Michael Chang blog main page
+description: Explore a personal tech blog where I share insights, tutorials, and hands-on experiences on coding, AI, game plugins, and project management.
 permalink: ':title/'
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "https://dks50217.com" # the base hostname & protocol for your site, e.g. http://example.com
