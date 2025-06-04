@@ -8,7 +8,7 @@ fig-caption:
 tags: [SpeciesNet,AI]
 ---
 
-在 AI 技術持續突破的今天，Google 推出了令人興奮的開源模型 SpeciesNet，專為辨識野生動物而設計。這個模型訓練於數千萬張由相機偵測拍攝的實際照片，能夠自動識別超過 2000 種動物物種與相關標籤。對於從事生態研究、環境保護或開發自然觀察應用的開發者來說，SpeciesNet 提供了一個強大的工具，不僅大幅減少人工標記的時間，也為全球生物多樣性的監測打開了新局。
+在 AI 技術持續突破的今天，Google 推出了令人興奮的開源模型 SpeciesNet，專為辨識野生動物而設計。這個模型訓練於數千萬張由相機偵測拍攝的實際照片，能夠自動識別超過 2000 種動物物種與相關標籤。對於從事生態研究、環境保護或開發自然觀察應用的開發者來說，SpeciesNet 提供了一個強大的工具，不僅大幅減少人工標記的時間。
 
 ## 模型組合架構（Ensemble）
 
@@ -26,7 +26,7 @@ tags: [SpeciesNet,AI]
   - 高階分類群（如：哺乳類 *Mammalia*、貓科 *Felidae*）
   - 非動物類別（如：「空白」、「車輛」）
 - 訓練資料：
-  - 來自 Wildlife Insights 社群的整理影像
+  - 來自 [Wildlife Insights](https://www.wildlifeinsights.org/) 社群的整理影像
   - 公開資料庫，總數超過 **6,500 萬張相機陷阱影像**
 - 功能：提供物種層級的影像分類結果。
 
@@ -44,22 +44,22 @@ tags: [SpeciesNet,AI]
 
 2. 安裝完成後開啟 Miniforge Prompt
 
-<img src="../assets/img/SpeciesNet/SpeciesNet-1.png">
+    <img src="../assets/img/SpeciesNet/SpeciesNet-1.png">
 
 3. 輸入以下指令建立環境名稱:speciesnet
 
-```bash
-conda create -n speciesnet python=3.11 pip -y
-```
+    ```bash
+    conda create -n speciesnet python=3.11 pip -y
+    ```
 4. 啟動speciesnet環境
 
-```bash
-conda activate speciesnet
-```
+    ```bash
+    conda activate speciesnet
+    ```
 
 5. 如出現以下代表環境建立成功
 
-<img src="../assets/img/SpeciesNet/SpeciesNet-2.png">
+    <img src="../assets/img/SpeciesNet/SpeciesNet-2.png">
 
 
 ## 安裝SpeciesNet
@@ -150,11 +150,12 @@ Predictions:
 
 ## 微調模型
 
-1. 從kaggle下載模型至本地端查看模型結構
+目前訓練程式碼尚未開源。雖然程式碼基本上是依照論文中的方法進行的，大部分的訓練資料也不是公開的
 
-本地路徑
+官方不久後可能會發布微調的範例程式碼
 
-* 
+
+* 從kaggle下載模型至本地端查看模型結構
 
 ```python
 path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
@@ -166,118 +167,123 @@ species_model = tf.keras.models.load_model(model_file)
 species_model.summary()
 ```
 
-
 <img src="../assets/img/SpeciesNet/SpeciesNet-5.png">
 
-2. 微調模型 
+* 模型若有下載會放至`/root/.cache/kagglehub/models/google/speciesnet/keras/v4.0.0a/3`
+  * label 是標籤、keras是模型主檔
+
+<img src="../assets/img/SpeciesNet/SpeciesNet-7.png">
 
 
-```python
-
-path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
-
-model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
-
-print(model_file);
-
-NEW_CLASS_NAME = "taiwan_black_bear"
-LABELS_TXT_PATH =  os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.labels.txt")
-NEW_DATASET_DIR = "dataset/taiwan_black_bear" 
-IMAGE_SIZE = (480, 480)
-BATCH_SIZE = 8
-EPOCHS = 10
+1. 可試著微調模型加入台灣黑熊
 
 
-print("[INFO] Loading base model...")
-base_model = load_model(model_file)
+    ```python
 
-print("[INFO] Extracting old dense weights...")
-old_dense_layer = base_model.layers[-1]
-old_weights, old_bias = old_dense_layer.get_weights()
+    path = kagglehub.model_download("google/speciesnet/keras/v4.0.0a")
 
-original_class_count = old_weights.shape[1]
-new_class_count = original_class_count + 1
+    model_file = os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.keras")
 
-print(f"[INFO] Expanding output layer from {original_class_count} to {new_class_count} classes...")
+    print(model_file);
 
-new_weights = np.concatenate(
-    [old_weights, np.random.normal(size=(old_weights.shape[0], 1))],
-    axis=1
-)
-new_bias = np.concatenate(
-    [old_bias, np.array([0.0])]
-)
-
-x = base_model.layers[-2].output  # Dropout 輸出層
-new_output = layers.Dense(new_class_count, activation='softmax', name="expanded_output")(x)
-
-model = Model(inputs=base_model.input, outputs=new_output)
+    NEW_CLASS_NAME = "taiwan_black_bear"
+    LABELS_TXT_PATH =  os.path.join(path, "always_crop_99710272_22x8_v12_epoch_00148.labels.txt")
+    NEW_DATASET_DIR = "dataset/taiwan_black_bear" 
+    IMAGE_SIZE = (480, 480)
+    BATCH_SIZE = 8
+    EPOCHS = 10
 
 
-model.get_layer("expanded_output").set_weights([new_weights, new_bias])
+    print("[INFO] Loading base model...")
+    base_model = load_model(model_file)
 
-for layer in model.layers[:-1]:
-    layer.trainable = False
+    print("[INFO] Extracting old dense weights...")
+    old_dense_layer = base_model.layers[-1]
+    old_weights, old_bias = old_dense_layer.get_weights()
 
-print("[INFO] Loading new class images...")
-datagen = ImageDataGenerator(rescale=1.0/255)
+    original_class_count = old_weights.shape[1]
+    new_class_count = original_class_count + 1
 
-def generate_bear_dataset(path):
-    class_label = new_class_count - 1  # taiwan_black_bear = 2498
-    filenames = [os.path.join(path, f) for f in os.listdir(path) if f.lower().endswith((".jpg", ".png"))]
-    images = []
-    labels = []
-    for f in filenames:
-        img = tf.keras.utils.load_img(f, target_size=IMAGE_SIZE)
-        img_array = tf.keras.utils.img_to_array(img) / 255.0
-        images.append(img_array)
-        labels.append(class_label)
-    return np.array(images), np.array(labels)
+    print(f"[INFO] Expanding output layer from {original_class_count} to {new_class_count} classes...")
 
-X_train, y_train = generate_bear_dataset(NEW_DATASET_DIR)
-print(f"[INFO] Loaded {len(X_train)} images for class '{NEW_CLASS_NAME}'.")
+    new_weights = np.concatenate(
+        [old_weights, np.random.normal(size=(old_weights.shape[0], 1))],
+        axis=1
+    )
+    new_bias = np.concatenate(
+        [old_bias, np.array([0.0])]
+    )
 
-model.compile(optimizer=tf.keras.optimizers.Adam(1e-4),
-              loss='sparse_categorical_crossentropy',
-              metrics=['accuracy'])
+    x = base_model.layers[-2].output  # Dropout 輸出層
+    new_output = layers.Dense(new_class_count, activation='softmax', name="expanded_output")(x)
 
-print("[INFO] Training on new class only...")
-model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS)
+    model = Model(inputs=base_model.input, outputs=new_output)
 
-print("[INFO] Saving new model as 'speciesnet_with_bear.keras'...")
-model.save("speciesnet_with_bear.keras")
 
-new_uuid = str(uuid.uuid4())
+    model.get_layer("expanded_output").set_weights([new_weights, new_bias])
 
-NEW_LABEL_LINE = f"{new_uuid};mammalia;carnivora;ursidae;ursus;thibetanus;taiwan_black_bear"
+    for layer in model.layers[:-1]:
+        layer.trainable = False
 
-with open(LABELS_TXT_PATH, "r", encoding="utf-8") as f:
-    lines = f.readlines()
-    if any("taiwan_black_bear" in line for line in lines):
-        print("[INFO] Label for 'taiwan_black_bear' already exists in labels.txt, skipping append.")
-    else:
-        backup_path = LABELS_TXT_PATH + ".backup"
-        if not os.path.exists(backup_path):
-            with open(backup_path, "w", encoding="utf-8") as backup_file:
-                backup_file.writelines(lines)
-            print(f"[INFO] Backup created: {backup_path}")
+    print("[INFO] Loading new class images...")
+    datagen = ImageDataGenerator(rescale=1.0/255)
 
-        with open(LABELS_TXT_PATH, "a", encoding="utf-8") as f_append:
-            f_append.write("\n" + NEW_LABEL_LINE)
-            print(f"[INFO] Appended new class to labels.txt: {new_uuid}")
-```
+    def generate_bear_dataset(path):
+        class_label = new_class_count - 1  # taiwan_black_bear = 2498
+        filenames = [os.path.join(path, f) for f in os.listdir(path) if f.lower().endswith((".jpg", ".png"))]
+        images = []
+        labels = []
+        for f in filenames:
+            img = tf.keras.utils.load_img(f, target_size=IMAGE_SIZE)
+            img_array = tf.keras.utils.img_to_array(img) / 255.0
+            images.append(img_array)
+            labels.append(class_label)
+        return np.array(images), np.array(labels)
+
+    X_train, y_train = generate_bear_dataset(NEW_DATASET_DIR)
+    print(f"[INFO] Loaded {len(X_train)} images for class '{NEW_CLASS_NAME}'.")
+
+    model.compile(optimizer=tf.keras.optimizers.Adam(1e-4),
+                loss='sparse_categorical_crossentropy',
+                metrics=['accuracy'])
+
+    print("[INFO] Training on new class only...")
+    model.fit(X_train, y_train, batch_size=BATCH_SIZE, epochs=EPOCHS)
+
+    print("[INFO] Saving new model as 'speciesnet_with_bear.keras'...")
+    model.save("speciesnet_with_bear.keras")
+
+    new_uuid = str(uuid.uuid4())
+
+    NEW_LABEL_LINE = f"{new_uuid};mammalia;carnivora;ursidae;ursus;thibetanus;taiwan_black_bear"
+
+    with open(LABELS_TXT_PATH, "r", encoding="utf-8") as f:
+        lines = f.readlines()
+        if any("taiwan_black_bear" in line for line in lines):
+            print("[INFO] Label for 'taiwan_black_bear' already exists in labels.txt, skipping append.")
+        else:
+            backup_path = LABELS_TXT_PATH + ".backup"
+            if not os.path.exists(backup_path):
+                with open(backup_path, "w", encoding="utf-8") as backup_file:
+                    backup_file.writelines(lines)
+                print(f"[INFO] Backup created: {backup_path}")
+
+            with open(LABELS_TXT_PATH, "a", encoding="utf-8") as f_append:
+                f_append.write("\n" + NEW_LABEL_LINE)
+                print(f"[INFO] Appended new class to labels.txt: {new_uuid}")
+    ```
 
 
 ## 使用GPU (以Windows為例)
 
+使用GPU可以加外模型預測處理速度，使用以下指令有檢測到GPU即可
+
 ```bash
-python -m speciesnet.scripts.gpu_test
 pip install torch torchvision --upgrade --force-reinstall --index-url https://download.pytorch.org/whl/cu118
+python -m speciesnet.scripts.gpu_test
 ```
 
 <img src="../assets/img/SpeciesNet/SpeciesNet-6.png">
-
-## 其它應用待補
 
 
 ## 演示用程式
