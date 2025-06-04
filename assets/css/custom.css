@@ -1,0 +1,49 @@
+.copy-btn {
+  position: absolute;
+  right: 8px;
+  top: 8px;
+  width: 28px;
+  height: 28px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  z-index: 2;
+  padding: 0;
+  transition: filter 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.copy-btn::before {
+  content: "📋";
+  font-size: 20px;
+  transition: color 0.2s, transform 0.2s;
+  display: inline-block;
+  opacity: 0.5;
+}
+
+.copy-btn:hover::before {
+  color: #0078d7;
+  filter: brightness(1.2);
+  transform: scale(1.15);
+  opacity: 1;
+}
+
+.copy-btn.copied::before {
+  content: "✅";
+  color: #4caf50;
+  opacity: 1;
+  animation: copied-bounce 0.4s;
+}
+
+@keyframes copied-bounce {
+  0%   { transform: scale(1); }
+  40%  { transform: scale(1.4); }
+  60%  { transform: scale(0.95); }
+  100% { transform: scale(1); }
+}
+pre {
+  position: relative;
+}

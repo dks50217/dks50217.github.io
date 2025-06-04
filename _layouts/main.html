@@ -51,3 +51,24 @@ layout: default
 <div class="content-box clearfix">
   {{ content }}
 </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('pre > code').forEach(function(codeBlock) {
+    var button = document.createElement('button');
+    button.className = 'copy-btn';
+    button.type = 'button';
+    button.innerText = '';
+    codeBlock.parentNode.insertBefore(button, codeBlock);
+
+    button.addEventListener('click', function() {
+      navigator.clipboard.writeText(codeBlock.innerText).then(function() {
+        button.classList.add('copied');
+        setTimeout(function() {
+          button.classList.remove('copied');
+        }, 1500);
+      });
+    });
+  });
+});
+</script>
