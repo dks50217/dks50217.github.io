@@ -44,7 +44,7 @@ layout: default
       </ul>
     </section> <!-- End Section Contact -->
     <div class="copyright">
-      <p>{{site.time | date: '%Y'}} &copy; {{site.author}}</p>
+      <p><span id="copyright-year"></span> &copy; {{site.author}}</p>
     </div>
   </footer> <!-- End Footer -->
 </aside> <!-- End Sidebar -->
@@ -71,4 +71,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   });
 });
+  document.getElementById('copyright-year').textContent = new Date().getFullYear();
 </script>
