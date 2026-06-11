@@ -3,7 +3,7 @@ layout: post
 title: 需求我來想，程式你來寫，公車我來搭
 date: 2026-06-11 00:00:00 +0000
 description: 用 Claude Code 把 TDX、LINE Bot、OpenAI 串在一起，做一個公車到站推播工具。
-img: 
+img: how-to-start.jpg
 fig-caption: BusNotifier
 tags: [LINE Bot, TDX, OpenAI, Claude Code, AI]
 ---
@@ -34,7 +34,7 @@ tags: [LINE Bot, TDX, OpenAI, Claude Code, AI]
 
 ---
 
-順帶學到兩件事。一是怎麼串 TDX——台灣的公共運輸資料其實都在，API 也算完整，只是平常比較少看到有人拿來做東西。二是 OpenAI function calling 的模式，本質上跟 MCP 一樣：你定義好工具的 schema，讓模型自己決定什麼時候呼叫、帶什麼參數，你只負責實作工具本身。這個模式一旦熟了，之後要讓 AI 操作任何外部系統都可以套用。
+順帶學到兩件事。一是怎麼串 TDX台灣的公共運輸資料其實都在，API 也算完整，只是平常比較少看到有人拿來做東西。二是 OpenAI function calling 的模式，本質上跟 MCP 一樣：你定義好工具的 schema，讓模型自己決定什麼時候呼叫、帶什麼參數，你只負責實作工具本身。這個模式一旦熟了，之後要讓 AI 操作任何外部系統都可以套用。
 
 程式幾乎都是 Claude Code 寫的。我的角色是描述需求、決定要做什麼、然後驗證結果對不對，功能跑起來之後實際用看看，不對就告訴它哪裡有問題。實際動手的部分是 LINE Bot 的申請與設定、TDX 帳號和 API 金鑰、OpenAI API、還有部署用的機器和 Docker。
 
