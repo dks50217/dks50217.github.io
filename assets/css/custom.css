@@ -156,8 +156,51 @@ pre {
   font-family: Consolas, 'Cascadia Mono', 'Lucida Console', monospace;
 }
 
+/* Cactuar easter egg — hops across the screen now and then */
+.cactuar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0; /* behind the terminal window — never blocks the center */
+  pointer-events: none;
+  /* wanders around the edges, avoiding the middle */
+  animation: cactuar-roam 26s ease-in-out infinite;
+}
+.cactuar span {
+  display: inline-block;
+  transform-origin: 50% 92%;
+  /* waddle: rocks side to side with a little bounce */
+  animation: cactuar-sway 0.7s ease-in-out infinite;
+}
+.cactuar img {
+  display: block;
+  width: 60px;
+  height: auto;
+  filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.4));
+}
+
+@keyframes cactuar-roam {
+  0%   { transform: translate(2vw,  6vh);  }   /* top-left */
+  12%  { transform: translate(42vw, 3vh);  }   /* top-middle */
+  24%  { transform: translate(82vw, 7vh);  }   /* top-right */
+  36%  { transform: translate(86vw, 42vh); }   /* right side */
+  48%  { transform: translate(80vw, 80vh); }   /* bottom-right */
+  60%  { transform: translate(44vw, 86vh); }   /* bottom-middle */
+  72%  { transform: translate(5vw,  82vh); }   /* bottom-left */
+  86%  { transform: translate(3vw,  40vh); }   /* left side */
+  100% { transform: translate(2vw,  6vh);  }   /* back to start */
+}
+@keyframes cactuar-sway {
+  0%   { transform: rotate(-7deg) translateY(0); }
+  25%  { transform: rotate(0deg)  translateY(-3px); }
+  50%  { transform: rotate(7deg)  translateY(0); }
+  75%  { transform: rotate(0deg)  translateY(-3px); }
+  100% { transform: rotate(-7deg) translateY(0); }
+}
 @media (prefers-reduced-motion: reduce) {
   .pipe .packet { animation: none; opacity: 0; }
+  .cactuar { animation: none; transform: translate(2vw, 6vh); }
+  .cactuar span { animation: none; }
 }
 
 .term-bar {
