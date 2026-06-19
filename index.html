@@ -1,19 +1,141 @@
 ---
-layout: main
+layout: default
+title: Home
+description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazor and Azure, focused on enterprise systems, DevOps, cloud architecture and AI integration.
 ---
-{% for post in paginator.posts %}
-<article class="post">
-  {% if post.img %}
-    <a class="post-thumbnail" style="background-image: url({{"/assets/img/" | prepend: site.baseurl | append : post.img}})" href="{{post.url | prepend: site.baseurl}}"></a>
-  {% else %}
-  {% endif %}
-  <div class="post-content">
-    <h2 class="post-title"><a href="{{post.url | prepend: site.baseurl}}">{{post.title}}</a></h2>
-    <p>{{ post.content | strip_html | truncatewords: 15 }}</p>
-    <span class="post-date">{{post.date | date: '%Y, %b %d'}}&nbsp;&nbsp;&nbsp;—&nbsp;</span>
-    <span class="post-words">{% capture words %}{{ post.content | number_of_words }}{% endcapture %}{% unless words contains "-" %}{{ words | plus: 250 | divided_by: 250 | append: " minute read" }}{% endunless %}</span>
-  </div>
-</article>
-{% endfor %}
 
-{% include pagination.html %}
+<main class="term">
+  <div class="pipeline-bg" aria-hidden="true">
+    <div class="pipe pipe1">
+      <span class="stage"><i class="fa-solid fa-code-branch"></i> checkout</span><span class="seg"></span><span class="stage">restore</span><span class="seg"></span><span class="stage">build</span><span class="seg"></span><span class="stage">unit test</span><span class="seg"></span><span class="stage">SAST</span><span class="seg"></span><span class="stage"><i class="fa-brands fa-docker"></i> image</span><span class="seg"></span><span class="stage">push</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:dev</span><span class="seg"></span><span class="stage">smoke</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:stg</span><span class="seg"></span><span class="stage">e2e</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:prod</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-heart-pulse"></i> health</span>
+      <span class="packet"></span>
+    </div>
+    <div class="pipe pipe2">
+      <span class="stage"><i class="fa-brands fa-docker"></i> build</span><span class="seg"></span><span class="stage">trivy scan</span><span class="seg"></span><span class="stage">sign</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-box"></i> push ACR</span><span class="seg"></span><span class="stage"><i class="fa-solid fa-dharmachakra"></i> helm upgrade</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> rollout</span>
+      <span class="packet"></span>
+    </div>
+    <div class="pipe pipe3">
+      <span class="stage"><i class="fa-solid fa-cloud"></i> tf fmt</span><span class="seg"></span><span class="stage">validate</span><span class="seg"></span><span class="stage">plan</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> apply</span><span class="seg dashed"></span><span class="stage rollback"><i class="fa-solid fa-rotate-left"></i> rollback</span>
+      <span class="packet"></span>
+    </div>
+    <div class="pipe pipe4">
+      <span class="stage"><i class="fa-solid fa-tag"></i> semver</span><span class="seg"></span><span class="stage">changelog</span><span class="seg"></span><span class="stage">tag</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> publish</span><span class="seg"></span><span class="stage"><i class="fa-solid fa-bell"></i> notify</span>
+      <span class="packet"></span>
+    </div>
+    <div class="pipe pipe5">
+      <span class="stage"><i class="fa-solid fa-chart-line"></i> monitor</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-triangle-exclamation"></i> alert</span><span class="seg dashed"></span><span class="stage rollback"><i class="fa-solid fa-rotate-left"></i> auto-rollback</span>
+      <span class="packet"></span>
+    </div>
+  </div>
+  <div class="term-window">
+    <div class="term-bar">
+      <span class="term-title"><i class="fa-solid fa-terminal"></i> Windows PowerShell</span>
+      <div class="bar-right">
+        <button type="button" class="lang-toggle" aria-label="Switch language">
+          <span class="lang-en">中文</span><span class="lang-zh">EN</span>
+        </button>
+        <span class="win-controls"><button type="button" class="min" aria-label="Minimize" title="Minimize">&#8211;</button><button type="button" class="max" aria-label="Maximize" title="Maximize">&#9633;</button><button type="button" class="close" aria-label="Close" title="Close">&#10005;</button></span>
+      </div>
+    </div>
+    <div class="term-body">
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">whoami</span></p>
+      <div class="whoami">
+        <img class="term-avatar" src="{{ site.baseurl }}/assets/img/avatar.png" alt="{{ site.author }}">
+        <div>
+          <p class="out name"><span class="lang-en">Michael Chang — Full-stack Engineer</span><span class="lang-zh">張家豪 — 全端工程師</span></p>
+          <p class="out muted"><span class="lang-en">New Taipei, TW · 7+ years building production systems</span><span class="lang-zh">新北市，台灣 · 7 年以上正式系統開發經驗</span></p>
+        </div>
+      </div>
+
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Content</span> <span class="arg">about.txt</span></p>
+      <p class="out lang-en">Full-stack engineer building systems primarily with .NET, Vue, Blazor and Azure.
+      Experienced across enterprise application development, legacy modernization, CI/CD,
+      security hardening and cloud deployment — extending into DevOps, containerization
+      and AI integration.</p>
+      <p class="out lang-zh">全端工程師，主要使用 .NET、Vue、Blazor 與 Azure 打造系統。
+      具備企業系統開發、舊系統現代化、CI/CD、資安強化與雲端部署經驗，
+      並延伸至 DevOps、容器化與 AI 整合。</p>
+
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-ChildItem</span> <span class="arg">.\skills</span></p>
+      <div class="skills">
+        <div class="skill">
+          <span class="skill-head"><span class="ps-mode">d----</span> front-end</span>
+          <span class="skill-list">Vue · TypeScript · Blazor · Tailwind · WCAG / a11y</span>
+        </div>
+        <div class="skill">
+          <span class="skill-head"><span class="ps-mode">d----</span> back-end</span>
+          <span class="skill-list">C# / .NET Core · Python · EF Core · SQL Server · MongoDB</span>
+        </div>
+        <div class="skill">
+          <span class="skill-head"><span class="ps-mode">d----</span> devops-cloud</span>
+          <span class="skill-list">Azure · Docker · CI/CD (Azure DevOps / Jenkins) · SOC 2</span>
+        </div>
+        <div class="skill">
+          <span class="skill-head"><span class="ps-mode">d----</span> ai-automation</span>
+          <span class="skill-list">Claude Code · MCP dev · RPA · Python (STT / vision)</span>
+        </div>
+      </div>
+
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Content</span> <span class="arg">interests.txt</span></p>
+      <ul class="term-interests out">
+        <li><i class="fa-solid fa-gamepad"></i> <b>FFXIV</b> — <span class="lang-en">long-time player &amp; data nerd; reverse-engineering game structures and contributing to open-source tooling.</span><span class="lang-zh">資深玩家與資料控；逆向遊戲結構並貢獻開源工具。</span></li>
+        <li><i class="fa-solid fa-record-vinyl"></i> <b><span class="lang-en">Vinyl records</span><span class="lang-zh">黑膠唱片</span></b> — <span class="lang-en">collecting and importing albums via Discogs and local crate-diggers.</span><span class="lang-zh">收藏黑膠，透過 Discogs 與在地管道收集／代購專輯。</span></li>
+        <li><i class="fa-solid fa-headphones"></i> <b><span class="lang-en">Trance / EDM</span><span class="lang-zh">Trance / EDM</span></b> — <span class="lang-en">a Trance Lover — the default soundtrack while I code.</span><span class="lang-zh">Trance 鐵粉，寫扣時的固定 BGM。</span></li>
+        <li><i class="fa-solid fa-dog"></i> <b>Peanuts</b> — <span class="lang-en">Snoopy &amp; Woodstock fan.</span><span class="lang-zh">Snoopy 與 Woodstock 的粉絲。</span></li>
+      </ul>
+
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Contact</span> <span class="param">-Links</span></p>
+      <ul class="term-social out">
+        <li><a href="http://github.com/{{ site.social-github }}" target="_blank"><i class="fa-brands fa-github"></i> github</a></li>
+        <li><a href="https://in.linkedin.com/in/{{ site.social-linkedin }}" target="_blank"><i class="fa-brands fa-linkedin"></i> linkedin</a></li>
+        <li><a href="https://x.com/{{ site.social-x }}" target="_blank"><i class="fa-brands fa-x-twitter"></i> x</a></li>
+        <li><a href="mailto:{{ site.social-email }}"><i class="fa-solid fa-envelope"></i> email</a></li>
+      </ul>
+
+      <p class="line">
+        <span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Start-Process</span> <span class="arg">.\blog</span>
+        <a class="term-link" href="{{ site.baseurl }}/blog/"><span class="lang-en">[ Go to Blog → ]</span><span class="lang-zh">[ 前往部落格 → ]</span></a>
+        <span class="cursor"></span>
+      </p>
+    </div>
+  </div>
+</main>
+
+<script>
+  (function () {
+    var KEY = 'site-lang';
+    var win = document.querySelector('.term-window');
+    var btn = document.querySelector('.lang-toggle');
+    function apply(lang) {
+      win.classList.toggle('zh', lang === 'zh');
+      try { localStorage.setItem(KEY, lang); } catch (e) {}
+    }
+    apply(localStorage.getItem(KEY) === 'zh' ? 'zh' : 'en');
+    btn.addEventListener('click', function () {
+      apply(win.classList.contains('zh') ? 'en' : 'zh');
+    });
+
+    // window controls: minimize / maximize / close
+    var bar = document.querySelector('.term-bar');
+    document.querySelector('.win-controls .min').addEventListener('click', function () {
+      win.classList.toggle('minimized');
+      win.classList.remove('maximized');
+    });
+    document.querySelector('.win-controls .max').addEventListener('click', function () {
+      win.classList.toggle('maximized');
+      win.classList.remove('minimized');
+    });
+    document.querySelector('.win-controls .close').addEventListener('click', function () {
+      win.classList.add('minimized');
+      win.classList.remove('maximized');
+    });
+    // click the title bar to restore from minimized
+    bar.addEventListener('click', function (e) {
+      if (win.classList.contains('minimized') && !e.target.closest('.win-controls, .lang-toggle')) {
+        win.classList.remove('minimized');
+      }
+    });
+  })();
+  var cy = document.getElementById('copyright-year');
+  if (cy) cy.textContent = new Date().getFullYear();
+</script>

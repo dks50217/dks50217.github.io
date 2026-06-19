@@ -47,3 +47,320 @@
 pre {
   position: relative;
 }
+
+/* - - - - - Home / PowerShell Landing - - - - - */
+.wrapper:has(.term) {
+  margin: 0 auto;
+  max-width: none;
+}
+
+.term {
+  position: relative;
+  overflow: hidden;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #0a0f1e;
+  background-image: radial-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 22px 22px;
+}
+
+/* DevOps pipeline backdrop */
+.pipeline-bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+.pipe {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  font-family: Consolas, 'Cascadia Mono', monospace;
+  font-size: 0.78rem;
+  color: #2f5d9e;
+  opacity: 0.5;
+}
+.pipe1 { top: 7%;  left: -120px; }
+.pipe2 { top: 27%; right: -80px; }
+.pipe3 { top: 50%; left: -90px; transform: translateY(-50%); }
+.pipe4 { bottom: 22%; right: -60px; }
+.pipe5 { bottom: 7%; left: -40px; }
+
+.pipe .stage {
+  padding: 3px 11px;
+  border: 1px solid #2f5d9e;
+  border-radius: 4px;
+  background: rgba(3, 36, 86, 0.45);
+  color: #4f86c6;
+}
+.pipe .stage.ok {
+  border-color: #2f8f5b;
+  color: #3fae6f;
+}
+.pipe .stage.gate {
+  border-color: #c9a227;
+  color: #e0c14a;
+}
+.pipe .stage.rollback {
+  border-style: dashed;
+  border-color: #a8484c;
+  color: #d4787c;
+}
+.pipe .seg {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, #2f5d9e, #3a6fb0);
+}
+.pipe .seg.dashed {
+  background: none;
+  border-top: 2px dashed #a8484c;
+}
+.pipe .packet {
+  position: absolute;
+  left: 0;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #5fd7ff;
+  box-shadow: 0 0 8px 2px rgba(95, 215, 255, 0.7);
+  animation: pipe-flow 5s linear infinite;
+}
+.pipe1 .packet { animation-duration: 11s; }
+.pipe2 .packet { animation-duration: 6.5s; animation-delay: -2s; background: #3fae6f; box-shadow: 0 0 8px 2px rgba(63, 174, 111, 0.7); }
+.pipe3 .packet { animation-duration: 8s; animation-delay: -1s; }
+.pipe4 .packet { animation-duration: 5s; animation-delay: -3s; background: #ffe066; box-shadow: 0 0 8px 2px rgba(255, 224, 102, 0.6); }
+.pipe5 .packet { animation-duration: 4.5s; animation-delay: -1.5s; background: #d4787c; box-shadow: 0 0 8px 2px rgba(212, 120, 124, 0.6); }
+
+@keyframes pipe-flow {
+  0% { left: 0; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { left: 100%; opacity: 0; }
+}
+
+.term-window {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 780px;
+  background: #012456; /* classic Windows PowerShell blue */
+  border: 1px solid #0a3a7a;
+  border-radius: 8px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.55);
+  overflow: hidden;
+  font-family: Consolas, 'Cascadia Mono', 'Lucida Console', monospace;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pipe .packet { animation: none; opacity: 0; }
+}
+
+.term-bar {
+  display: flex;
+  align-items: center;
+  padding: 8px 6px 8px 14px;
+  background: #001436;
+  border-bottom: 1px solid #0a3a7a;
+}
+
+.term-title {
+  color: #d6def0;
+  font-size: 0.82rem;
+}
+.term-title i { color: #5fd7ff; margin-right: 8px; }
+
+.bar-right {
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.lang-toggle {
+  padding: 3px 12px;
+  background: transparent;
+  border: 1px solid #1f5aa8;
+  border-radius: 4px;
+  color: #9fb4d6;
+  font-family: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+.lang-toggle:hover {
+  color: #ffe066;
+  border-color: #ffe066;
+}
+
+.win-controls {
+  display: flex;
+}
+.win-controls button {
+  width: 30px;
+  height: 26px;
+  padding: 0;
+  background: transparent;
+  border: none;
+  color: #c2cee6;
+  font-family: inherit;
+  font-size: 0.8rem;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.win-controls button:hover { background: rgba(255, 255, 255, 0.12); }
+.win-controls .close:hover { background: #e81123; color: #fff; }
+.win-controls button:focus-visible,
+.lang-toggle:focus-visible,
+.term-social a:focus-visible,
+.term-link:focus-visible {
+  outline: 2px solid #ffe066;
+  outline-offset: 2px;
+}
+
+/* window states */
+.term-window { transition: max-width 0.2s ease, border-radius 0.2s ease; }
+.term-window.minimized .term-body { display: none; }
+.term-window.minimized .term-bar { cursor: pointer; }
+
+.term:has(.term-window.maximized) { padding: 0; }
+.term-window.maximized {
+  max-width: 100%;
+  min-height: 100vh;
+  border: none;
+  border-radius: 0;
+}
+
+/* language switch: English by default, .zh shows Chinese */
+.term-window .lang-zh { display: none; }
+.term-window.zh .lang-en { display: none; }
+.term-window.zh .lang-zh { display: revert; }
+
+.term-body {
+  padding: 22px 24px 26px;
+  font-size: 0.9rem;
+  line-height: 1.7;
+  color: #eeedf0;
+}
+
+.term-body .line {
+  margin: 16px 0 4px;
+  color: #eeedf0;
+  word-break: break-word;
+}
+.term-body .line:first-child { margin-top: 0; }
+
+/* PSReadLine-ish syntax colors */
+.ps-prompt { color: #ffffff; margin-right: 8px; }
+.cmd { color: #f4e98c; }      /* cmdlet — yellow */
+.arg { color: #6ad7e5; }      /* path / string — cyan */
+.param { color: #c5cee0; }    /* -Parameter — light gray */
+.ps-mode { color: #7f93b8; }  /* dir listing mode column */
+
+.term-body .out {
+  margin: 0 0 4px;
+  padding-left: 20px;
+  color: #cdd7ee;
+}
+
+.whoami {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-left: 20px;
+  margin: 4px 0;
+}
+.whoami .out { padding-left: 0; }
+
+.term-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  border: 1px solid #0a3a7a;
+  background: #fff;
+  flex-shrink: 0;
+}
+
+.term-body .name {
+  color: #ffffff;
+  font-weight: 700;
+}
+.term-body .muted { font-size: 0.82rem; color: #9fb4d6; }
+
+.skills {
+  padding-left: 20px;
+  margin: 4px 0;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px 24px;
+}
+
+.skill-head {
+  display: block;
+  color: #5fd7ff; /* directory name — cyan */
+  font-weight: 700;
+}
+.skill-head .ps-mode { font-weight: 400; margin-right: 8px; }
+
+.skill-list {
+  display: block;
+  color: #aebbd6;
+  font-size: 0.82rem;
+}
+
+.term-interests {
+  list-style: none;
+  padding-left: 20px;
+  margin: 4px 0;
+}
+.term-interests li {
+  margin: 2px 0;
+  color: #cdd7ee;
+  font-size: 0.85rem;
+}
+.term-interests i { color: #5fd7ff; margin-right: 6px; }
+.term-interests b { color: #ffffff; }
+
+.term-social {
+  list-style: none;
+  padding-left: 20px;
+  margin: 4px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 18px;
+}
+.term-social a {
+  color: #5fd7ff;
+  text-decoration: none;
+}
+.term-social a:hover { text-decoration: underline; }
+
+.term-link {
+  color: #ffe066;
+  text-decoration: none;
+  font-weight: 700;
+  transition: color 0.2s;
+}
+.term-link:hover { color: #fff3b0; }
+
+.cursor {
+  display: inline-block;
+  width: 9px;
+  height: 1.05em;
+  background: #eeedf0;
+  margin-left: 4px;
+  vertical-align: text-bottom;
+  animation: term-blink 1s steps(2, start) infinite;
+}
+@keyframes term-blink {
+  to { visibility: hidden; }
+}
+
+@media (max-width: 640px) {
+  .skills { grid-template-columns: 1fr; }
+  .term-body { font-size: 0.84rem; }
+}
