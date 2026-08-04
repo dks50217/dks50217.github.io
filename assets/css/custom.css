@@ -171,6 +171,26 @@ pre {
   transform-origin: 50% 92%;
   /* waddle: rocks side to side with a little bounce */
   animation: cactuar-sway 0.7s ease-in-out infinite;
+  pointer-events: auto; /* grabbable — the rest of .cactuar stays click-through */
+  cursor: grab;
+  touch-action: none;
+}
+
+/* being dragged: freeze the roam, flail while held */
+.cactuar.grabbed { animation: none; cursor: grabbing; will-change: transform; }
+.cactuar.grabbed span {
+  transform-origin: 50% 50%;
+  cursor: grabbing;
+  animation: cactuar-struggle 0.16s ease-in-out infinite;
+}
+.cactuar.dropped { animation: none; } /* stays where you let go */
+
+@keyframes cactuar-struggle {
+  0%   { transform: rotate(-16deg) translateY(0); }
+  25%  { transform: rotate(14deg)  translateY(-4px); }
+  50%  { transform: rotate(-12deg) translateY(1px); }
+  75%  { transform: rotate(17deg)  translateY(-3px); }
+  100% { transform: rotate(-16deg) translateY(0); }
 }
 .cactuar img {
   display: block;

@@ -137,6 +137,41 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       }
     });
   })();
+  // drag the cactuar around; CSS handles the struggle wiggle via .grabbed
+  (function () {
+    var cactuar = document.querySelector('.cactuar');
+    var term = document.querySelector('.term');
+    if (!cactuar || !term) return;
+    var grabDX = 0, grabDY = 0;
+
+    cactuar.addEventListener('pointerdown', function (e) {
+      var c = cactuar.getBoundingClientRect();
+      grabDX = e.clientX - c.left;
+      grabDY = e.clientY - c.top;
+      cactuar.classList.add('grabbed');
+      cactuar.classList.remove('dropped');
+      cactuar.setPointerCapture(e.pointerId);
+      e.preventDefault();
+    });
+
+    cactuar.addEventListener('pointermove', function (e) {
+      if (!cactuar.classList.contains('grabbed')) return;
+      var r = term.getBoundingClientRect();
+      cactuar.style.transform =
+        'translate(' + (e.clientX - r.left - grabDX) + 'px,' +
+                       (e.clientY - r.top - grabDY) + 'px)';
+    });
+
+    function drop(e) {
+      if (!cactuar.classList.contains('grabbed')) return;
+      cactuar.classList.remove('grabbed');
+      cactuar.classList.add('dropped'); // stops roaming, stays put
+      try { cactuar.releasePointerCapture(e.pointerId); } catch (_) {}
+    }
+    cactuar.addEventListener('pointerup', drop);
+    cactuar.addEventListener('pointercancel', drop);
+  })();
+
   var cy = document.getElementById('copyright-year');
   if (cy) cy.textContent = new Date().getFullYear();
 </script>
