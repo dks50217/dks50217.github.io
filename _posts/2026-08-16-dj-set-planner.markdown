@@ -90,4 +90,8 @@ tags: [作業研究, 動態規劃, 最佳化, DJ, C#]
 
 ---
 
-最後推薦一套讓我很有感的現場：[Armin van Buuren F2F Maddix @ A State of Trance 2025](https://www.youtube.com/watch?v=2-s3hXbDu7Y&list=RD2-s3hXbDu7Y)。F2F 就是兩個 DJ 同台一人接一首輪流放，整場的能量走勢跟每一次轉場都是現場即興喬出來的——我程式想算的那個「順」，他們靠手感直接就做到了。看完再回頭想想我那三條規則，會很有感覺。
+最後推薦一套讓我很有感的現場：**Armin van Buuren F2F Maddix @ A State of Trance 2025**。F2F 就是兩個 DJ 同台一人接一首輪流放，整場的能量走勢跟每一次轉場都是現場即興喬出來的——我程式想算的那個「順」，他們靠手感直接就做到了。看完再回頭想想我那三條規則，會很有感覺。
+
+<div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5em 0;">
+  <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" src="https://www.youtube.com/embed/2-s3hXbDu7Y" title="Armin van Buuren F2F Maddix @ ASOT 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
