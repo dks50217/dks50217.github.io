@@ -87,3 +87,7 @@ tags: [作業研究, 動態規劃, 最佳化, DJ, C#]
 我做的事情就是把「歌單怎麼排最順」變成一道數學題，用還算聰明的方法算出幾套各有取捨的選項，而且會自己驗算確認沒算錯。拿來在一小撮候選歌裡挑最佳順序很好用，想直接吞下整個曲庫就別想了。
 
 程式碼放在 GitHub：[dks50217/DjSetPlanner](https://github.com/dks50217/DjSetPlanner)，用 C# / .NET 8 寫的，`dotnet run` 就能跑內建曲庫的 demo，也能餵自己的 CSV。
+
+---
+
+最後推薦一套讓我很有感的現場：[Armin van Buuren F2F Maddix @ A State of Trance 2025](https://www.youtube.com/watch?v=2-s3hXbDu7Y&list=RD2-s3hXbDu7Y)。F2F 就是兩個 DJ 同台一人接一首輪流放，整場的能量走勢跟每一次轉場都是現場即興喬出來的——我程式想算的那個「順」，他們靠手感直接就做到了。看完再回頭想想我那三條規則，會很有感覺。
