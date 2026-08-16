@@ -137,19 +137,49 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       }
     });
   })();
-  // drag the cactuar around; CSS handles the struggle wiggle via .grabbed
+  // drag the cactuar, fling it, let it bounce off the walls
   (function () {
     var cactuar = document.querySelector('.cactuar');
     var term = document.querySelector('.term');
     if (!cactuar || !term) return;
-    var grabDX = 0, grabDY = 0;
+    // ponytail: physics knobs — tune the feel here
+    var GRAVITY = 0.7, BOUNCE = 0.72, AIR = 0.995, FLOOR_FRICTION = 0.8, REST = 0.4;
+
+    var IDLE = 6000;      // ms untouched before it wanders off again
+    var WALK_SPEED = 0.8; // px/frame stroll pace
+    var px = 0, py = 0, vx = 0, vy = 0, grabDX = 0, grabDY = 0, raf = 0, idle = 0, target = null;
+
+    function armIdle() { clearTimeout(idle); idle = setTimeout(wake, IDLE); }
+    function wake() { // stroll off from wherever it landed
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      cactuar.classList.remove('dropped', 'flung', 'grabbed');
+      cactuar.classList.add('walking');
+      target = null;
+      raf = requestAnimationFrame(walk);
+    }
+    function walk() {
+      var b = bounds();
+      if (target === null || Math.abs(target - px) < 1) target = Math.random() * b.w;
+      px += (target > px ? 1 : -1) * WALK_SPEED;
+      py = b.h; // along the floor
+      place();
+      raf = requestAnimationFrame(walk);
+    }
+    function place() { cactuar.style.transform = 'translate(' + px + 'px,' + py + 'px)'; }
+    function bounds() {
+      return { w: term.clientWidth - cactuar.offsetWidth,
+               h: term.clientHeight - cactuar.offsetHeight };
+    }
 
     cactuar.addEventListener('pointerdown', function (e) {
-      var c = cactuar.getBoundingClientRect();
-      grabDX = e.clientX - c.left;
-      grabDY = e.clientY - c.top;
+      cancelAnimationFrame(raf); clearTimeout(idle);
+      var c = cactuar.getBoundingClientRect(), r = term.getBoundingClientRect();
+      px = c.left - r.left; py = c.top - r.top;   // freeze wherever it currently is
+      grabDX = e.clientX - c.left; grabDY = e.clientY - c.top;
+      vx = vy = 0;
       cactuar.classList.add('grabbed');
-      cactuar.classList.remove('dropped');
+      cactuar.classList.remove('dropped', 'flung', 'walking');
+      place();
       cactuar.setPointerCapture(e.pointerId);
       e.preventDefault();
     });
@@ -157,19 +187,45 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
     cactuar.addEventListener('pointermove', function (e) {
       if (!cactuar.classList.contains('grabbed')) return;
       var r = term.getBoundingClientRect();
-      cactuar.style.transform =
-        'translate(' + (e.clientX - r.left - grabDX) + 'px,' +
-                       (e.clientY - r.top - grabDY) + 'px)';
+      var nx = e.clientX - r.left - grabDX, ny = e.clientY - r.top - grabDY;
+      vx = nx - px; vy = ny - py;   // velocity = last drag delta ≈ throw speed
+      px = nx; py = ny;
+      place();
     });
 
-    function drop(e) {
+    function step() {
+      var b = bounds();
+      vy += GRAVITY; vx *= AIR; vy *= AIR;
+      px += vx; py += vy;
+      if (px < 0)   { px = 0;   vx = -vx * BOUNCE; }
+      if (px > b.w) { px = b.w; vx = -vx * BOUNCE; }
+      if (py < 0)   { py = 0;   vy = -vy * BOUNCE; }
+      if (py > b.h) { py = b.h; vy = -vy * BOUNCE; vx *= FLOOR_FRICTION; }
+      place();
+      // rest: sitting on the floor with little energy left
+      var resting = py >= b.h - 0.5 && Math.abs(vx) < REST && Math.abs(vy) < REST;
+      if (resting) {
+        py = b.h; place();
+        cactuar.classList.remove('flung');
+        cactuar.classList.add('dropped');
+        armIdle();
+        return;
+      }
+      raf = requestAnimationFrame(step);
+    }
+
+    function release(e) {
       if (!cactuar.classList.contains('grabbed')) return;
       cactuar.classList.remove('grabbed');
-      cactuar.classList.add('dropped'); // stops roaming, stays put
+      cactuar.classList.add('flung');
       try { cactuar.releasePointerCapture(e.pointerId); } catch (_) {}
+      if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+        cactuar.classList.remove('flung'); cactuar.classList.add('dropped'); armIdle(); return;
+      }
+      raf = requestAnimationFrame(step);
     }
-    cactuar.addEventListener('pointerup', drop);
-    cactuar.addEventListener('pointercancel', drop);
+    cactuar.addEventListener('pointerup', release);
+    cactuar.addEventListener('pointercancel', release);
   })();
 
   var cy = document.getElementById('copyright-year');

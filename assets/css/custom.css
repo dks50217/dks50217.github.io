@@ -176,14 +176,18 @@ pre {
   touch-action: none;
 }
 
-/* being dragged: freeze the roam, flail while held */
-.cactuar.grabbed { animation: none; cursor: grabbing; will-change: transform; }
-.cactuar.grabbed span {
+/* being dragged / flung: freeze the roam, flail the whole time */
+.cactuar.grabbed,
+.cactuar.flung,
+.cactuar.walking { animation: none; will-change: transform; } /* JS drives the transform */
+.cactuar.grabbed { cursor: grabbing; }
+.cactuar.grabbed span,
+.cactuar.flung span {
   transform-origin: 50% 50%;
-  cursor: grabbing;
   animation: cactuar-struggle 0.16s ease-in-out infinite;
 }
-.cactuar.dropped { animation: none; } /* stays where you let go */
+.cactuar.grabbed span { cursor: grabbing; }
+.cactuar.dropped { animation: none; } /* stays where it lands */
 
 @keyframes cactuar-struggle {
   0%   { transform: rotate(-16deg) translateY(0); }
