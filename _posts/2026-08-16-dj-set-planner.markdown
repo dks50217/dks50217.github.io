@@ -2,7 +2,7 @@
 layout: post
 title: 我寫了一個幫 DJ 排歌單的小程式
 date: 2026-08-16 00:00:00 +0000
-description: 把 DJ 的接歌手感翻譯成一道作業研究題目——用調性、BPM、能量走勢把「接得順不順」變成分數，再拿動態規劃跟 Pareto 前緣算出幾套各有取捨的歌單。
+description: 把 DJ 的接歌手感翻譯成一道作業研究題目：用調性、BPM、能量走勢把「接得順不順」變成分數，再拿動態規劃跟 Pareto 前緣算出幾套各有取捨的歌單。
 img: dj-set-planner.jpg
 fig-caption:
 tags: [作業研究, 動態規劃, 最佳化, DJ, C#]
@@ -95,3 +95,60 @@ tags: [作業研究, 動態規劃, 最佳化, DJ, C#]
 <div style="position:relative;padding-bottom:56.25%;height:0;overflow:hidden;margin:1.5em 0;">
   <iframe style="position:absolute;top:0;left:0;width:100%;height:100%;" src="https://www.youtube.com/embed/2-s3hXbDu7Y" title="Armin van Buuren F2F Maddix @ ASOT 2025" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 </div>
+
+順手把這場 set 的能量走勢畫成一張圖，五段（P1–P5）都是先掉到低點、再一路爬回高潮，那個呼吸感看圖就懂。
+
+<figure style="margin:1.5em 0;">
+<svg viewBox="0 0 720 300" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:auto;display:block;border-radius:12px" role="img" aria-label="ASOT 2025 Armin F2F Maddix 這場 set 的能量隨時間變化，五段各自重置後爬升到高峰。">
+<rect x="0" y="0" width="720" height="300" rx="12" fill="#0f0a17"/>
+<line x1="34.0" y1="26" x2="34.0" y2="266" stroke="#54e0ff" opacity="0.2"/>
+<text x="39.0" y="37" font-family="monospace" font-size="9" letter-spacing="1.5" fill="#6c6280">P1</text>
+<rect x="179.3" y="26" width="149.1" height="240" fill="#fff" opacity="0.03"/>
+<line x1="179.3" y1="26" x2="179.3" y2="266" stroke="#54e0ff" opacity="0.2"/>
+<text x="184.3" y="37" font-family="monospace" font-size="9" letter-spacing="1.5" fill="#6c6280">P2</text>
+<line x1="328.4" y1="26" x2="328.4" y2="266" stroke="#54e0ff" opacity="0.2"/>
+<text x="333.4" y="37" font-family="monospace" font-size="9" letter-spacing="1.5" fill="#6c6280">P3</text>
+<rect x="469.5" y="26" width="151.1" height="240" fill="#fff" opacity="0.03"/>
+<line x1="469.5" y1="26" x2="469.5" y2="266" stroke="#54e0ff" opacity="0.2"/>
+<text x="474.5" y="37" font-family="monospace" font-size="9" letter-spacing="1.5" fill="#6c6280">P4</text>
+<line x1="620.6" y1="26" x2="620.6" y2="266" stroke="#54e0ff" opacity="0.2"/>
+<text x="625.6" y="37" font-family="monospace" font-size="9" letter-spacing="1.5" fill="#6c6280">P5</text>
+<line x1="34" y1="146.0" x2="710" y2="146.0" stroke="#2a2036" stroke-dasharray="2 5"/>
+<text x="28" y="149.0" text-anchor="end" font-family="monospace" font-size="9" fill="#6c6280">E5</text>
+<line x1="34" y1="26.0" x2="710" y2="26.0" stroke="#2a2036" stroke-dasharray="2 5"/>
+<text x="28" y="29.0" text-anchor="end" font-family="monospace" font-size="9" fill="#6c6280">E10</text>
+<rect x="35.0" y="122.0" width="47.9" height="144.0" rx="2.5" fill="hsl(330,52%,40%)"/>
+<rect x="84.9" y="98.0" width="12.3" height="168.0" rx="2.5" fill="hsl(330,63%,47%)"/>
+<rect x="99.2" y="74.0" width="30.6" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="131.8" y="98.0" width="25.6" height="168.0" rx="2.5" fill="hsl(330,63%,47%)"/>
+<rect x="159.4" y="74.0" width="18.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="180.3" y="98.0" width="37.8" height="168.0" rx="2.5" fill="hsl(330,63%,47%)"/>
+<rect x="220.1" y="74.0" width="29.8" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="251.9" y="74.0" width="30.8" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="284.6" y="50.0" width="26.8" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="313.5" y="50.0" width="13.9" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="329.4" y="98.0" width="23.8" height="168.0" rx="2.5" fill="hsl(330,63%,47%)"/>
+<rect x="355.2" y="50.0" width="25.8" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="383.0" y="74.0" width="21.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="406.9" y="50.0" width="45.7" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="454.6" y="74.0" width="13.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="470.5" y="74.0" width="20.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="493.4" y="50.0" width="32.8" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="528.1" y="50.0" width="13.9" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="544.0" y="26.0" width="25.0" height="240.0" rx="2.5" fill="#ffd24d" filter="url(#g)"/>
+<rect x="571.1" y="26.0" width="48.5" height="240.0" rx="2.5" fill="#ffd24d" filter="url(#g)"/>
+<rect x="621.6" y="74.0" width="15.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="639.4" y="74.0" width="21.9" height="192.0" rx="2.5" fill="hsl(330,74%,54%)"/>
+<rect x="663.3" y="50.0" width="31.8" height="216.0" rx="2.5" fill="hsl(330,85%,61%)"/>
+<rect x="697.1" y="26.0" width="11.9" height="240.0" rx="2.5" fill="#ffd24d" filter="url(#g)"/>
+<polyline points="58.9,122.0 91.0,98.0 114.5,74.0 144.6,98.0 168.9,74.0 199.2,98.0 235.0,74.0 267.3,74.0 298.1,50.0 320.4,50.0 341.3,98.0 368.1,50.0 394.0,74.0 429.7,50.0 461.5,74.0 480.9,74.0 509.7,50.0 535.1,50.0 556.6,26.0 595.3,26.0 629.5,74.0 650.4,74.0 679.2,50.0 703.0,26.0" fill="none" stroke="#ff3d8a" stroke-width="1.5" opacity="0.85"/>
+<text x="30.2" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">00:00</text>
+<text x="149.5" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">10:00</text>
+<text x="268.7" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">20:00</text>
+<text x="388.0" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">30:00</text>
+<text x="507.3" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">40:00</text>
+<text x="626.5" y="288" text-anchor="middle" font-family="monospace" font-size="9" fill="#6c6280">50:00</text>
+<defs><filter id="g" x="-40%" y="-40%" width="180%" height="180%"><feDropShadow dx="0" dy="0" stdDeviation="3" flood-color="#ffd24d" flood-opacity="0.7"/></filter></defs>
+</svg>
+<figcaption style="font-size:13px;color:#888;margin-top:8px;line-height:1.6;">橫軸是演出時間、柱寬是每首歌播放的長度、柱高是能量，粉紅線是能量弧線，琥珀色柱是 E10 的高潮。時間與曲序取自實際 tracklist，能量為依段落結構的估計值。</figcaption>
+</figure>
