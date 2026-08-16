@@ -2,7 +2,7 @@
 layout: post
 title: FFXIV Switch 2 首次啟動選錯 Service Account，怎麼救
 date: 2026-08-16 00:00:00 +0000
-description: FFXIV Switch 2 首次啟動選錯 Service Account，怎麼救
+description: FFXIV Switch 2 首次啟動選錯 Service Account 導致角色不見？實測用官方 Improperly Registered Service Account 表單，十天把角色救回來的完整流程與踩雷筆記。
 img: FFXIV/ffxiv-sw2-error.jpg
 fig-caption:
 tags: [FFXIV]
