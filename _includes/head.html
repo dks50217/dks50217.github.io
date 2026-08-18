@@ -1,5 +1,13 @@
 <head>
 	<meta charset="utf-8">
+	<script>
+	  // Set theme before paint to avoid a flash. Saved choice wins, else follow the OS.
+	  (function(){
+	    var t = localStorage.getItem('theme');
+	    if(!t){ t = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+	    document.documentElement.setAttribute('data-theme', t);
+	  })();
+	</script>
 	<title>{% if page.title %}{{page.title}} - {{site.title}}{% else %}{{site.title}}{% endif %}</title>
 
   <!-- Edit site and author settings in `_config.yml` to make the social details your own -->

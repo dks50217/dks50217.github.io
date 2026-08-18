@@ -2,6 +2,10 @@
 layout: default
 ---
 
+<button type="button" id="theme-toggle" class="theme-toggle" aria-label="切換深色模式">
+  <i class="fa-solid fa-moon" aria-hidden="true"></i>
+</button>
+
 <aside class="sidebar">
   <header>
     <div class="about">
@@ -70,4 +74,19 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 });
   document.getElementById('copyright-year').textContent = new Date().getFullYear();
+
+  var themeToggle = document.getElementById('theme-toggle');
+  if (themeToggle) {
+    var syncIcon = function() {
+      var dark = document.documentElement.getAttribute('data-theme') === 'dark';
+      themeToggle.querySelector('i').className = dark ? 'fa-solid fa-sun' : 'fa-solid fa-moon';
+    };
+    syncIcon();
+    themeToggle.addEventListener('click', function() {
+      var next = document.documentElement.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      syncIcon();
+    });
+  }
 </script>

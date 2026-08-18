@@ -431,3 +431,75 @@ pre {
   .skills { grid-template-columns: 1fr; }
   .term-body { font-size: 0.84rem; }
 }
+
+/* - - - - - Theme toggle button (fixed, top-right) - - - - - */
+.theme-toggle {
+  position: fixed;
+  top: 18px;
+  right: 18px;
+  z-index: 50;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: rgba(255, 255, 255, 0.85);
+  -webkit-backdrop-filter: blur(6px);
+  backdrop-filter: blur(6px);
+  border: 1px solid #dcdcdc;
+  border-radius: 50%;
+  color: #515151;
+  font-size: 16px;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  transition: color 0.2s, border-color 0.2s, transform 0.2s;
+}
+.theme-toggle:hover { color: #263959; border-color: #263959; transform: scale(1.08); }
+
+/* - - - - - Dark theme (reading pages) - - - - -
+   ponytail: overrides just the light surfaces/text; the home page is its own
+   always-dark terminal, and code blocks stay a light panel on purpose (the
+   Rouge token colors are tuned for a light background — recoloring all of them
+   isn't worth it). */
+:root[data-theme="dark"] body {
+  background-color: #17191d;
+  color: #c9ccd1;
+  transition: background-color 0.2s, color 0.2s;
+}
+:root[data-theme="dark"] .sidebar,
+:root[data-theme="dark"] .post,
+:root[data-theme="dark"] .article-page { background-color: #1e2126; }
+
+:root[data-theme="dark"] .about .author-name,
+:root[data-theme="dark"] .contact .contact-title,
+:root[data-theme="dark"] .contact ul li a { color: #c9ccd1; }
+:root[data-theme="dark"] .contact ul li a:hover,
+:root[data-theme="dark"] .about .author-name { color: #e8eaed; }
+
+:root[data-theme="dark"] .content-box a,
+:root[data-theme="dark"] .post .post-content .post-title a { color: #7aa2e3; }
+:root[data-theme="dark"] .post .post-content p { color: #b6bac0; }
+
+:root[data-theme="dark"] blockquote { border-left-color: #444; color: #9aa0a8; }
+
+:root[data-theme="dark"] .highlight { border: 1px solid #333941; }
+
+:root[data-theme="dark"] table,
+:root[data-theme="dark"] table td,
+:root[data-theme="dark"] table th { border-color: #3a3f47; }
+:root[data-theme="dark"] table { background-color: #1e2126; }
+:root[data-theme="dark"] table tr:nth-child(even) { background: #24272d; }
+
+:root[data-theme="dark"] .page-footer .page-share a,
+:root[data-theme="dark"] .page-footer .page-tag a,
+:root[data-theme="dark"] .tags li a,
+:root[data-theme="dark"] .tag-list span a { background-color: #24272d; color: #7aa2e3; }
+:root[data-theme="dark"] .page-footer .page-share a:hover,
+:root[data-theme="dark"] .page-footer .page-tag a:hover,
+:root[data-theme="dark"] .tags li a:hover { background-color: #2c3038; }
+
+:root[data-theme="dark"] .theme-toggle {
+  background: rgba(30, 33, 38, 0.85);
+  border-color: #3a3f47;
+  color: #ffe066;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+}
+:root[data-theme="dark"] .theme-toggle:hover { border-color: #ffe066; }
