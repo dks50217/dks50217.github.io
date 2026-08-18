@@ -28,6 +28,7 @@ analytics: G-QVCNPWTBJ7 # Google Analytics 4
 markdown: kramdown
 plugins:
   - jekyll-sitemap
+  - jekyll-feed
   - jekyll-paginate
   - jemoji
 
