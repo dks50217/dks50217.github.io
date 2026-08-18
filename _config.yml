@@ -14,8 +14,12 @@ social-github: dks50217
 social-linkedin: dks50217
 social-email: dks50217@gmail.com
 
-# Disqus
-discus-identifier: dks50217 # add your discus identifier
+# Comments (giscus) — get these from https://giscus.app after enabling
+# Discussions on the repo and installing the giscus GitHub App.
+giscus-repo: dks50217/dks50217.github.io
+giscus-repo-id: "MDEwOlJlcG9zaXRvcnkyMjk4NTAzMTU="
+giscus-category: Announcements
+giscus-category-id: "DIC_kwDODbM8y84DDnPS"
 
 # Tracker
 analytics: G-QVCNPWTBJ7 # Google Analytics 4
