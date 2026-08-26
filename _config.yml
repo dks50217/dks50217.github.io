@@ -6,7 +6,7 @@ url: "https://dks50217.com" # the base hostname & protocol for your site, e.g. h
 site-x: https://x.com/dks50217
 # Author Settings
 author: Michael Chang # add your name
-author-img: michael-chang.jpg # add your photo
+author-img: avatar.png # add your photo
 about-author: 熱愛Trance，目前是位後端工程師，熱愛網頁開發，前端善用Vue，後端使用C#開發Web API，喜歡動手做遊戲小工具。
 social-x: dks50217
 social-facebook: dks50217
