@@ -10,9 +10,7 @@ tags: [Blazor,C#,Security]
 
 這篇是寫給自己看的筆記。平常寫的東西幾乎都是 Blazor Server，前陣子有個站要過滲透測試，我就先拿黑箱的角度把站台從頭打一遍，順手把檢查的東西整理成這份清單。適用情境先講清楚：**只對自己擁有、或已經拿到授權的站台做**，不是拿去打別人的。
 
-Blazor Server 有個地方跟一般前端框架很不一樣：C# 邏輯全都留在伺服器，瀏覽器那邊其實只有 `blazor.server.js`、一條 SignalR（WebSocket）連線，跟畫面的 diff。使用者在畫面上點的每一下，本質上都是一個 SignalR 事件被送回伺服器處理。
-
-這其實帶來一個好處：傳統前後端分離的網站，瀏覽器會直接打一堆 REST API，端點、參數、回傳格式全都攤在外面給人看。Blazor Server 不是這樣，瀏覽器從頭到尾只跟一條 SignalR 連線講話，真正去打後端 API、查資料庫的是伺服器上的 C#，外面看不到打了哪些 API。而且後端 API 通常還關在 VNET（虛擬網路）裡，對外根本連不到，只有 Blazor Server 進得去。
+Blazor Server 有個地方跟一般前端框架很不一樣：C# 邏輯全留在伺服器，瀏覽器那邊只有 `blazor.server.js`、一條 SignalR（WebSocket）連線，跟畫面的 diff。使用者點的每一下，本質上都是一個 SignalR 事件送回伺服器處理。這也帶來一個好處：傳統網站的瀏覽器會直接打一堆 REST API，端點、參數全攤在外面；Blazor Server 只跟那條 SignalR 連線講話，真正打後端 API、查資料庫的是伺服器上的 C#，外面看不到。後端 API 通常還關在 VNET（虛擬網路）裡，對外根本連不到，只有 Blazor Server 進得去。
 
 <script type="module">
   import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs';
@@ -115,7 +113,7 @@ flowchart LR
 ### 完整流程
 
 - [ ] 走完整 business flow，找**邏輯層漏洞**（價格、數量被竄改，或訂單狀態被跳關／倒退，例如沒付款就跳到「已出貨」）
-- [ ] 金流回呼（webhook / callback）端點的驗簽與冪等性
+- [ ] 付款之類的 callback / webhook 端點，要驗簽、要冪等（同一筆通知重送不會重複扣款或加值）
 
 ---
 
@@ -205,11 +203,7 @@ var connectSources =
 
 **跳轉回應要擋快取**
 
-登入挑戰之類的 3xx 跳轉，Location 常帶著敏感的 return URL。這種回應要強制 `no-store`，但記得**排除 304**，不然靜態檔案的瀏覽器快取會壞掉：
-
-```csharp
-response.Headers.CacheControl = "no-store, no-cache, must-revalidate, private";
-```
+登入挑戰之類的 3xx 跳轉，Location 常帶著敏感的 return URL。這種回應要強制 `no-store`（`no-store, no-cache, must-revalidate, private`），但記得**排除 304**，不然靜態檔案的瀏覽器快取會壞掉。
 
 **COEP 為了第三方分析降級**
 
@@ -217,18 +211,7 @@ response.Headers.CacheControl = "no-store, no-cache, must-revalidate, private";
 
 **HSTS 只在 production 開**
 
-HSTS 由 app 端這支 middleware 發，而且**只在 production 加**。開發環境不加，是因為 localhost 萬一有 SSL 憑證問題，HSTS 會讓瀏覽器對這個網域強制走 HTTPS，很容易把自己鎖在外面：
-
-```csharp
-if (!env.IsDevelopment())
-{
-    context.Response.Headers.Append(
-        "Strict-Transport-Security",
-        "max-age=31536000; includeSubDomains; preload");
-}
-```
-
-清單 Stage 0 那條「HSTS 已啟用」對應的就是這段。要驗的話直接看 production 回應標頭有沒有 `Strict-Transport-Security`。
+HSTS 由 app 端這支 middleware 發，而且**只在 production 加**（`if (!env.IsDevelopment())` 才 append）。開發環境不加，是因為 localhost 萬一有 SSL 憑證問題，HSTS 會讓瀏覽器對這個網域強制走 HTTPS，很容易把自己鎖在外面。清單 Stage 0 那條「HSTS 已啟用」對應的就是這段，要驗直接看 production 回應標頭有沒有 `Strict-Transport-Security`。
 
 ---
 
@@ -240,10 +223,9 @@ if (!env.IsDevelopment())
 
 但加密過不等於可以拿來存 token。幾個要想清楚的點：
 
-- **XSS 防不了**：密文雖然客戶端解不開，但攻擊者拿到 XSS 後可以直接把整包密文送回 app 重放，或乾脆就在使用者的 circuit 裡動手。加密保護的是「靜態儲存」，不是「有人能在頁面上跑 JS」這件事。真正要擋 XSS 竊 token，`HttpOnly` cookie 才是對的工具，JS 根本讀不到。
-- **Blazor Server 常常根本不需要**：Server 模式的狀態本來就活在伺服器端的 circuit 裡，token 放伺服器記憶體 / session 就好，沒必要下放到瀏覽器。會需要把 token 存 localStorage 的多半是 WASM 的模式，別把它照搬過來。
-- **要存也優先用 `ProtectedSessionStorage`**：它綁在分頁、關掉就沒了，比 `ProtectedLocalStorage` 那種跨分頁又長期存活的合理得多。token 活得越久，暴露的風險越大。
-- **Data Protection 金鑰是部署問題**：金鑰環（key ring）如果沒持久化，或在 web farm / 多台機器沒共用，重啟或換機後就解不開先前存的密文，使用者會莫名被登出。這不是安全漏洞，但是很常見的營運地雷，測試時記得涵蓋。
+- **XSS 防不了**：密文客戶端雖然解不開，但攻擊者拿到 XSS 就能把整包送回 app 重放，或直接在使用者的 circuit 裡動手。要擋 XSS 竊 token，該用 JS 讀不到的 `HttpOnly` cookie。
+- **Blazor Server 常常不需要**：狀態本來就在伺服器端的 circuit 裡，token 放記憶體 / session 就好。會想存 localStorage 的多半是 WASM 的做法，別照搬。真要存也優先用 `ProtectedSessionStorage`（綁分頁、關掉就沒，存活越久風險越大）。
+- **金鑰是部署雷**：Data Protection 的金鑰環沒持久化、或 web farm 沒共用，重啟或換機後舊密文就解不開，使用者會莫名被登出。不是漏洞，但很常見，測試要涵蓋。
 
 所以我的用法是：`ProtectedLocalStorage` 拿來存不那麼敏感、掉了頂多重取的狀態就好；真正的 auth token，Blazor Server 優先留在伺服器端，需要瀏覽器持有時用 `HttpOnly` cookie，而不是塞進 storage。
 
