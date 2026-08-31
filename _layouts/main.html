@@ -6,6 +6,11 @@ layout: default
   <i class="fa-solid fa-moon" aria-hidden="true"></i>
 </button>
 
+<div class="cactuar-peek" id="cactuar" role="button" tabindex="0" aria-label="戳一下仙人掌">
+  <img src="{{site.baseurl}}/assets/img/cactuar.png" alt="" aria-hidden="true" draggable="false">
+  <span class="cactuar-bubble" aria-hidden="true">！</span>
+</div>
+
 <aside class="sidebar">
   <header>
     <div class="about">
@@ -91,6 +96,37 @@ document.addEventListener('DOMContentLoaded', function() {
       if (giscus) {
         giscus.contentWindow.postMessage({ giscus: { setConfig: { theme: next } } }, 'https://giscus.app');
       }
+    });
+  }
+
+  // 戳仙人掌：冒「！」+ 越點越高，沒點就慢慢沉回去（只有暗色時能戳）
+  var cactuar = document.getElementById('cactuar');
+  if (cactuar) {
+    var lift = 0, maxLift = 26, decay = null;        // 單位 vh，上限約 1/4 頁高
+    var render = function() { cactuar.style.setProperty('--lift', lift + 'vh'); };
+    var startDecay = function() {
+      if (decay) return;
+      decay = setInterval(function() {
+        lift -= 1.2;
+        if (lift <= 0) {
+          lift = 0;
+          cactuar.style.removeProperty('--lift');   // 歸零後交還給 CSS
+          clearInterval(decay); decay = null;
+        } else { render(); }
+      }, 60);
+    };
+    var pokeCactuar = function() {
+      lift = maxLift;                                // 點一下就直接彈到約 1/4 頁高
+      render();
+      cactuar.classList.remove('poked');
+      void cactuar.offsetWidth;                      // 重觸發「！」
+      cactuar.classList.add('poked');
+      setTimeout(function() { cactuar.classList.remove('poked'); }, 500);
+      startDecay();
+    };
+    cactuar.addEventListener('click', pokeCactuar);
+    cactuar.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); pokeCactuar(); }
     });
   }
 </script>

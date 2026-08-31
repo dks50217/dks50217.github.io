@@ -503,3 +503,49 @@ pre {
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 :root[data-theme="dark"] .theme-toggle:hover { border-color: #ffe066; }
+
+/* - - - - - 彩蛋：戳角落的仙人掌 - - - - - */
+.cactuar-peek {
+  position: fixed;
+  right: 24px;
+  bottom: 0;
+  width: 92px;
+  max-width: 22vw;
+  z-index: 40;
+  transform: translateY(100%);   /* 亮色：整隻縮回畫面底下 */
+  pointer-events: none;
+  transition: transform 0.38s cubic-bezier(0.34, 1.56, 0.64, 1);  /* 帶彈跳的 overshoot */
+  -webkit-user-select: none;
+  user-select: none;
+}
+.cactuar-peek img { display: block; width: 100%; }
+
+:root[data-theme="dark"] .cactuar-peek {
+  /* 暗色：探出頭在角落。--lift 由 JS 控制，連點會越抬越高 */
+  transform: translateY(calc(45% - var(--lift, 0%)));
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+/* 冒出來的「！」 */
+.cactuar-bubble {
+  position: absolute;
+  top: -2px;
+  left: 50%;
+  transform: translate(-50%, -100%) scale(0);
+  font-size: 28px;
+  font-weight: 900;
+  color: #ff3d3d;
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.35);
+  pointer-events: none;
+  opacity: 0;
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s;
+}
+.cactuar-peek.poked .cactuar-bubble {
+  opacity: 1;
+  transform: translate(-50%, -100%) scale(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cactuar-peek { transition: none; }
+}
