@@ -224,7 +224,7 @@ HSTS 由 app 端這支 middleware 發，而且**只在 production 加**（`if (!
 但加密過不等於可以拿來存 token。幾個要想清楚的點：
 
 - **XSS 防不了**：密文客戶端雖然解不開，但攻擊者拿到 XSS 就能把整包送回 app 重放，或直接在使用者的 circuit 裡動手。要擋 XSS 竊 token，該用 JS 讀不到的 `HttpOnly` cookie。
-- **Blazor Server 常常不需要**：狀態本來就在伺服器端的 circuit 裡，token 放記憶體 / session 就好。會想存 localStorage 的多半是 WASM 的做法，別照搬。真要存也優先用 `ProtectedSessionStorage`（綁分頁、關掉就沒，存活越久風險越大）。
+- **Blazor Server 常常不需要**：狀態本來就在伺服器端的 circuit 裡，token 放記憶體 / session 就好。會想存 localStorage 的多半是 WASM 的做法，別照搬。
 - **金鑰是部署雷**：Data Protection 的金鑰環沒持久化、或 web farm 沒共用，重啟或換機後舊密文就解不開，使用者會莫名被登出。不是漏洞，但很常見，測試要涵蓋。
 
 所以我的用法是：`ProtectedLocalStorage` 拿來存不那麼敏感、掉了頂多重取的狀態就好；真正的 auth token，Blazor Server 優先留在伺服器端，需要瀏覽器持有時用 `HttpOnly` cookie，而不是塞進 storage。
