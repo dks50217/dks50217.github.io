@@ -23,6 +23,7 @@ giscus-category-id: "DIC_kwDODbM8y84DDnPS"
 
 # Tracker
 analytics: G-QVCNPWTBJ7 # Google Analytics 4
+clarity: yazzsrp88a # Microsoft Clarity project id
 
 # Build Settings
 markdown: kramdown
