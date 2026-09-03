@@ -234,7 +234,7 @@ public sealed class MyPlugin : IDalamudPlugin
 # 免責聲明 / 注意事項
 
 - 本文僅供**技術研究與學習**之用，介紹的皆為公開的開源工具。
-- FINAL FANTASY XIV 及其所有遊戲資料（文字、圖像、模型、音樂等）著作權皆屬 **SQUARE ENIX**。請勿大規模轉貼、散布拆包出來的遊戲內容，亦請勿提供「漢化包」等衍生作品的公開下載——這可能同時涉及著作權侵權與違反使用條款。
+- FINAL FANTASY XIV 及其所有遊戲資料（文字、圖像、模型、音樂等）著作權皆屬 **SQUARE ENIX**。請勿大規模轉貼、散布拆包出來的遊戲內容。
 - 讀取執行期記憶體或使用第三方外掛（如 sharlayan、Dalamud）屬於官方未支援的範疇，使用前建議先了解相關條款規範，並自行評估與承擔風險。
 - 進行任何操作前，請先閱讀並遵守 [SQUARE ENIX 的使用者協議與服務條款](https://support.na.square-enix.com/rule.php?id=5382&la=1)。
 - 本文作者不對讀者因採用本文內容所造成的任何後果負責。
