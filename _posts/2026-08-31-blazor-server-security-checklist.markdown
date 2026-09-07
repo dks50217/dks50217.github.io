@@ -20,11 +20,7 @@ Blazor Server 跟一般前端不一樣：C# 全在伺服器，瀏覽器只有 `b
 
 <pre class="mermaid">
 flowchart LR
-  subgraph 傳統前後端分離
-    direction LR
-    B1[瀏覽器] -->|看得到每個 API 端點| A1[REST API] --> D1[(資料庫)]
-  end
-  subgraph Blazor Server
+  subgraph Server
     direction LR
     B2[瀏覽器] -->|只看得到一條 SignalR| C2[伺服器上的 C#]
     subgraph VN[VNET 私有網路]
@@ -32,6 +28,16 @@ flowchart LR
     end
     C2 --> A2
     B2 -. 連不到 .-> A2
+  end
+  subgraph WASM
+    direction LR
+    B1[瀏覽器<br/>C# 跑在這] -->|直接打，API 對外| A1[後端 API] --> D1[(資料庫)]
+  end
+  subgraph Auto
+    direction LR
+    B3[瀏覽器] -->|先 Server| C3[伺服器上的 C#]
+    B3 -. 之後切 WASM .-> A3[後端 API]
+    C3 --> A3
   end
 </pre>
 
@@ -210,9 +216,17 @@ var connectSources =
 
 ## 一點心得
 
-最常中的是 Stage 3 授權落點：`[Authorize]` 掛在頁面就當做完，服務層沒再檢查，繞過 UI 送事件就進去了。
+也可以直接用這段 Prompt 讓 AI Agent 協助檢查：
 
-用自動化工具測的話，prompt 先講清楚前提：Blazor Server（走 SignalR，不是 REST-first）、UI 隱藏不等於授權、有沒有混用 REST API、render mode 是 Server / WASM / Auto。
+```text
+Act as a Blazor Server security expert. Audit the C# source I provide; if you lack the files needed to confirm a check, ask for them before asserting a finding — do not invent vulnerabilities I might have.
+
+Premise: Blazor Server relies on stateful SignalR circuits rather than REST, and hiding/disabling UI elements is not authorization.
+
+Audit against these core checks: (1) Authorization Placement & IDOR: service/data layer independently enforces permissions and object ownership, so crafted/replayed SignalR events cannot bypass UI controls; (2) Circuit State Isolation: Scoped services are not registered as Singletons, no static state leaks data across circuits, and AuthenticationStateProvider is not placed where it can be cross-circuit polluted; (3) Prerender Leakage: initial SSR does not expose unauthorized sensitive data before circuit connection; (4) Input & XSS: over-posting and unsanitized `@((MarkupString)...)`; (5) Token Security: auth tokens are not stored in `ProtectedLocalStorage` (keep server-side or use HttpOnly cookies); (6) Circuit DoS: rate/size limits on expensive actions, uploads, and circuits to prevent server resource exhaustion.
+
+For each finding, output: severity (Critical/High/Medium/Low), file:line, a concrete PoC (e.g. the crafted SignalR event or request), and remediation code.
+```
 
 ---
 
