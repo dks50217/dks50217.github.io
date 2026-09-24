@@ -93,6 +93,13 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
         <li><a href="mailto:{{ site.social-email }}"><i class="fa-solid fa-envelope"></i> email</a></li>
       </ul>
 
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-ChildItem</span> <span class="arg">.\posts</span> <span class="param">-Newest</span> <span class="arg">5</span></p>
+      <ul class="term-interests term-posts out">
+        {% for post in site.posts limit:5 %}
+        <li><span class="ps-mode">-a---</span> <span class="muted">{{ post.date | date: "%Y-%m-%d" }}</span> <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
+        {% endfor %}
+      </ul>
+
       <p class="line">
         <span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Start-Process</span> <span class="arg">.\blog</span>
         <a class="term-link" href="{{ site.baseurl }}/blog/"><span class="lang-en">[ Go to Blog → ]</span><span class="lang-zh">[ 前往部落格 → ]</span></a>
