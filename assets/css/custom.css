@@ -473,6 +473,7 @@ pre {
 
 :root[data-theme="dark"] .about .author-name,
 :root[data-theme="dark"] .contact .contact-title,
+:root[data-theme="dark"] .author-nav a,
 :root[data-theme="dark"] .contact ul li a { color: #c9ccd1; }
 :root[data-theme="dark"] .contact ul li a:hover,
 :root[data-theme="dark"] .about .author-name { color: #e8eaed; }
@@ -552,3 +553,18 @@ pre {
 @media (prefers-reduced-motion: reduce) {
   .cactuar-peek { transition: none; }
 }
+/* sidebar nav — the only way back to the post list from a post */
+.author-nav {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin: 0 0 10px;
+}
+.author-nav a {
+  color: #515151;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  text-decoration: none;
+}
+.author-nav a:hover { text-decoration: underline; }
