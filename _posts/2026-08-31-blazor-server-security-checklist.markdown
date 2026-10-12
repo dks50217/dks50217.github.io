@@ -8,7 +8,7 @@ fig-caption:
 tags: [Blazor,C#,Security]
 ---
 
-寫給自己的筆記。平常做的幾乎都是 Blazor Server，前陣子有個站要過滲透測試，順手把黑箱檢查的東西整理成清單。**只對自己擁有或已授權的站台做。**
+寫給自己的筆記。平常做的幾乎都是 Blazor Server，把黑箱檢查的東西整理成清單。**只對自己擁有或已授權的站台做。**
 
 Blazor Server 跟一般前端不一樣：C# 全在伺服器，瀏覽器只有 `blazor.server.js`、一條 SignalR 連線和畫面 diff，每個互動都是一則 SignalR 事件送回伺服器。好處是傳統網站把 REST API 端點全攤在外面，Blazor Server 只露一條 SignalR，真正打 API、查 DB 的 C# 在伺服器，外面看不到；API 還關在 VNET 裡連不到。
 
@@ -173,7 +173,7 @@ Blazor Server 這邊本來就該很乾淨，挖得到料就是有東西漏了。
 
 ## 實戰：Front Door + CSP 安全標頭
 
-範例站台的做法：前面 Azure Front Door 當反向代理，安全標頭由 app 端一支 middleware 統一發。幾個踩過的坑：
+以 Azure Front Door 當反向代理為例，常見做法是安全標頭由 app 端一支 middleware 統一發。幾個容易踩的坑：
 
 **CSP nonce**：每個 request 一組隨機 nonce 授權自家 inline script。用 Hex 不用 Base64，因為 Base64 的 `+` 會被 Razor 在屬性裡 encode，害 header 跟頁面上的 nonce 對不起來，DAST 會誤報。
 
