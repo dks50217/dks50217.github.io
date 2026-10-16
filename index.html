@@ -1,32 +1,10 @@
 ---
 layout: default
 title: Home
-description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazor and Azure, focused on enterprise systems, DevOps, cloud architecture and AI integration.
+description: Michael Chang — Software Engineer working with .NET, Vue, Blazor and Azure, focused on enterprise systems, DevOps, cloud architecture and AI integration.
 ---
 
 <main class="term">
-  <div class="pipeline-bg" aria-hidden="true">
-    <div class="pipe pipe1">
-      <span class="stage"><i class="fa-solid fa-code-branch"></i> checkout</span><span class="seg"></span><span class="stage">restore</span><span class="seg"></span><span class="stage">build</span><span class="seg"></span><span class="stage">unit test</span><span class="seg"></span><span class="stage">SAST</span><span class="seg"></span><span class="stage"><i class="fa-brands fa-docker"></i> image</span><span class="seg"></span><span class="stage">push</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:dev</span><span class="seg"></span><span class="stage">smoke</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:stg</span><span class="seg"></span><span class="stage">e2e</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-rocket"></i> deploy:prod</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-heart-pulse"></i> health</span>
-      <span class="packet"></span>
-    </div>
-    <div class="pipe pipe2">
-      <span class="stage"><i class="fa-brands fa-docker"></i> build</span><span class="seg"></span><span class="stage">trivy scan</span><span class="seg"></span><span class="stage">sign</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-box"></i> push ACR</span><span class="seg"></span><span class="stage"><i class="fa-solid fa-dharmachakra"></i> helm upgrade</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> rollout</span>
-      <span class="packet"></span>
-    </div>
-    <div class="pipe pipe3">
-      <span class="stage"><i class="fa-solid fa-cloud"></i> tf fmt</span><span class="seg"></span><span class="stage">validate</span><span class="seg"></span><span class="stage">plan</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-lock"></i> approval</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> apply</span><span class="seg dashed"></span><span class="stage rollback"><i class="fa-solid fa-rotate-left"></i> rollback</span>
-      <span class="packet"></span>
-    </div>
-    <div class="pipe pipe4">
-      <span class="stage"><i class="fa-solid fa-tag"></i> semver</span><span class="seg"></span><span class="stage">changelog</span><span class="seg"></span><span class="stage">tag</span><span class="seg"></span><span class="stage ok"><i class="fa-solid fa-check"></i> publish</span><span class="seg"></span><span class="stage"><i class="fa-solid fa-bell"></i> notify</span>
-      <span class="packet"></span>
-    </div>
-    <div class="pipe pipe5">
-      <span class="stage"><i class="fa-solid fa-chart-line"></i> monitor</span><span class="seg"></span><span class="stage gate"><i class="fa-solid fa-triangle-exclamation"></i> alert</span><span class="seg dashed"></span><span class="stage rollback"><i class="fa-solid fa-rotate-left"></i> auto-rollback</span>
-      <span class="packet"></span>
-    </div>
-  </div>
   <div class="cactuar" aria-hidden="true"><span><img src="{{ site.baseurl }}/assets/img/cactuar.png" alt=""></span></div>
   <div class="term-window">
     <div class="term-bar">
@@ -43,19 +21,21 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       <div class="whoami">
         <img class="term-avatar" src="{{ site.baseurl }}/assets/img/avatar.png" alt="{{ site.author }}">
         <div>
-          <p class="out name"><span class="lang-en">Michael Chang — Full-stack Engineer</span><span class="lang-zh">張家豪 — 全端工程師</span></p>
-          <p class="out muted"><span class="lang-en">New Taipei, TW · 7+ years building production systems</span><span class="lang-zh">新北市，台灣 · 7 年以上正式系統開發經驗</span></p>
+          <p class="out name"><span class="lang-en">Michael Chang — Software Engineer · .NET &amp; Azure</span><span class="lang-zh">張家豪 — 軟體工程師 · .NET &amp; Azure</span></p>
+          <p class="out muted"><span class="lang-en">Based in Taiwan · Building production systems across regions</span><span class="lang-zh">台灣 · 跨國正式系統開發</span></p>
         </div>
       </div>
 
       <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Content</span> <span class="arg">about.txt</span></p>
-      <p class="out lang-en">Full-stack engineer building systems primarily with .NET, Vue, Blazor and Azure.
-      Experienced across enterprise application development, legacy modernization, CI/CD,
-      security hardening and cloud deployment — extending into DevOps, containerization
-      and AI integration.</p>
-      <p class="out lang-zh">全端工程師，主要使用 .NET、Vue、Blazor 與 Azure 打造系統。
-      具備企業系統開發、舊系統現代化、CI/CD、資安強化與雲端部署經驗，
-      並延伸至 DevOps、容器化與 AI 整合。</p>
+      <p class="out lang-en">Software engineer experienced in designing, building and
+      maintaining production systems on .NET, Vue, Blazor and Azure.
+      Focused on enterprise applications and legacy modernization, with hands-on experience
+      in CI/CD pipelines, security hardening (SOC 2) and cloud deployment.
+      Currently focused on integrating AI into development workflows.</p>
+      <p class="out lang-zh">軟體工程師，具備正式環境系統的設計、開發與維運經驗，
+      技術主軸為 .NET、Vue、Blazor 與 Azure。
+      專注於企業應用系統與舊系統現代化，具備 CI/CD 流程建置、資安強化（SOC 2）與雲端部署的實務經驗；
+      目前持續將 AI 導入開發與工作流程</p>
 
       <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-ChildItem</span> <span class="arg">.\skills</span></p>
       <div class="skills">
@@ -65,7 +45,7 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
         </div>
         <div class="skill">
           <span class="skill-head"><span class="ps-mode">d----</span> back-end</span>
-          <span class="skill-list">C# / .NET Core · Python · EF Core · SQL Server · MongoDB</span>
+          <span class="skill-list">C# / .NET · ASP.NET Core Web API · EF Core · SQL Server · MongoDB</span>
         </div>
         <div class="skill">
           <span class="skill-head"><span class="ps-mode">d----</span> devops-cloud</span>
@@ -73,16 +53,16 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
         </div>
         <div class="skill">
           <span class="skill-head"><span class="ps-mode">d----</span> ai-automation</span>
-          <span class="skill-list">Claude Code · MCP dev · RPA · Python (STT / vision)</span>
+          <span class="skill-list">Claude Code · MCP server development · RPA · Python (STT / vision)</span>
         </div>
       </div>
 
       <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Content</span> <span class="arg">interests.txt</span></p>
       <ul class="term-interests out">
-        <li><i class="fa-solid fa-gamepad"></i> <b>FFXIV</b> — <span class="lang-en">long-time player &amp; data nerd; reverse-engineering game structures and contributing to open-source tooling.</span><span class="lang-zh">資深玩家與資料控；逆向遊戲結構並貢獻開源工具。</span></li>
-        <li><i class="fa-solid fa-record-vinyl"></i> <b><span class="lang-en">Vinyl records</span><span class="lang-zh">黑膠唱片</span></b> — <span class="lang-en">collecting and importing albums via Discogs and local crate-diggers.</span><span class="lang-zh">收藏黑膠，透過 Discogs 與在地管道收集／代購專輯。</span></li>
-        <li><i class="fa-solid fa-headphones"></i> <b><span class="lang-en">Trance / EDM</span><span class="lang-zh">Trance / EDM</span></b> — <span class="lang-en">a Trance Lover — the default soundtrack while I code.</span><span class="lang-zh">Trance 鐵粉，寫扣時的固定 BGM。</span></li>
-        <li><i class="fa-solid fa-dog"></i> <b>Peanuts</b> — <span class="lang-en">Snoopy &amp; Woodstock fan.</span><span class="lang-zh">史努比與胡士托的粉絲。</span></li>
+        <li><i class="fa-solid fa-gamepad"></i> <b>FFXIV</b> — <span class="lang-en">long-time player; building companion tools and contributing to open-source projects.</span><span class="lang-zh">資深玩家，平常也會開發輔助工具並參與開源專案</span></li>
+        <li><i class="fa-solid fa-record-vinyl"></i> <b><span class="lang-en">Vinyl records</span><span class="lang-zh">黑膠唱片</span></b> — <span class="lang-en">collecting records.</span><span class="lang-zh">收藏黑膠</span></li>
+        <li><i class="fa-solid fa-headphones"></i> <b><span class="lang-en">Trance / EDM</span><span class="lang-zh">Trance / EDM</span></b> — <span class="lang-en">the default soundtrack while I code.</span><span class="lang-zh">Trance 鐵粉，寫 Code 時固定會聽</span></li>
+        <li><i class="fa-solid fa-dog"></i> <b>Peanuts</b> — <span class="lang-en">Snoopy &amp; Woodstock fan.</span><span class="lang-zh">史努比與胡士托的粉絲</span></li>
       </ul>
 
       <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-Contact</span> <span class="param">-Links</span></p>
@@ -93,12 +73,17 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
         <li><a href="mailto:{{ site.social-email }}"><i class="fa-solid fa-envelope"></i> email</a></li>
       </ul>
 
-      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-ChildItem</span> <span class="arg">.\posts</span> <span class="param">-Newest</span> <span class="arg">5</span></p>
+      <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Get-ChildItem</span> <span class="arg">.\posts</span> <span class="param">-Newest</span> <span class="arg">3</span></p>
       <ul class="term-interests term-posts out">
-        {% for post in site.posts limit:5 %}
+        {% for post in site.posts limit:3 %}
         <li><span class="ps-mode">-a---</span> <span class="muted">{{ post.date | date: "%Y-%m-%d" }}</span> <a href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a></li>
         {% endfor %}
       </ul>
+
+      <div class="cactuar-err" aria-hidden="true" hidden>
+        <p class="line"><span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Grab-Cactuar</span></p>
+        <p class="ps-error">Grab-Cactuar : The cactuar does not like being grabbed.</p>
+      </div>
 
       <p class="line">
         <span class="ps-prompt">PS C:\Users\michael&gt;</span> <span class="cmd">Start-Process</span> <span class="arg">.\blog</span>
@@ -137,8 +122,30 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       win.classList.add('minimized');
       win.classList.remove('maximized');
     });
+    // drag the window by its title bar
+    // ponytail: no clamping, a refresh brings it back if dragged off-screen
+    var dx = 0, dy = 0, sx = 0, sy = 0, sx0 = 0, sy0 = 0, dragging = false, moved = false;
+    bar.addEventListener('pointerdown', function (e) {
+      if (win.classList.contains('maximized') || e.target.closest('button')) return;
+      dragging = true; moved = false;
+      sx = e.clientX - dx; sy = e.clientY - dy; sx0 = e.clientX; sy0 = e.clientY;
+      bar.setPointerCapture(e.pointerId);
+    });
+    bar.addEventListener('pointermove', function (e) {
+      if (!dragging) return;
+      dx = e.clientX - sx; dy = e.clientY - sy;
+      if (Math.abs(e.clientX - sx0) + Math.abs(e.clientY - sy0) > 3) moved = true; // ignore click jitter
+      win.style.transform = 'translate(' + dx + 'px,' + dy + 'px)';
+    });
+    bar.addEventListener('pointerup', function () { dragging = false; });
+    bar.addEventListener('pointercancel', function () { dragging = false; });
+    document.querySelector('.win-controls .max').addEventListener('click', function () {
+      dx = dy = 0; win.style.transform = ''; // maximize snaps back to the center
+    });
+
     // click the title bar to restore from minimized
     bar.addEventListener('click', function (e) {
+      if (moved) { moved = false; return; } // it was a drag, not a click
       if (win.classList.contains('minimized') && !e.target.closest('.win-controls, .lang-toggle')) {
         win.classList.remove('minimized');
       }
@@ -155,6 +162,7 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
     var IDLE = 6000;      // ms untouched before it wanders off again
     var WALK_SPEED = 0.8; // px/frame stroll pace
     var px = 0, py = 0, vx = 0, vy = 0, grabDX = 0, grabDY = 0, raf = 0, idle = 0, target = null;
+    var err = document.querySelector('.cactuar-err'), errT = 0; // PowerShell error while held
 
     function armIdle() { clearTimeout(idle); idle = setTimeout(wake, IDLE); }
     function wake() { // stroll off from wherever it landed
@@ -186,6 +194,7 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       vx = vy = 0;
       cactuar.classList.add('grabbed');
       cactuar.classList.remove('dropped', 'flung', 'walking');
+      clearTimeout(errT); err.hidden = false;
       place();
       cactuar.setPointerCapture(e.pointerId);
       e.preventDefault();
@@ -225,6 +234,7 @@ description: Michael Chang — Full-stack Engineer working with .NET, Vue, Blazo
       if (!cactuar.classList.contains('grabbed')) return;
       cactuar.classList.remove('grabbed');
       cactuar.classList.add('flung');
+      errT = setTimeout(function () { err.hidden = true; }, 4000);
       try { cactuar.releasePointerCapture(e.pointerId); } catch (_) {}
       if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
         cactuar.classList.remove('flung'); cactuar.classList.add('dropped'); armIdle(); return;
