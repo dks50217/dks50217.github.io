@@ -96,7 +96,9 @@ self-hosted agent 保留工作目錄時 restore 可能被略過，先清工作�
 
 log 送到主機外，至少留 90 天
 
-如果弱點剛公開、上游還沒出 patch 來不及修？可以先指望 Cloudflare 或 Azure Front Door 的 WAF 代管規則幫忙先扛一波（虛擬修補）。如果連邊界都擋不住又極度高危，先掛維護模式關機斷網，才是最成熟的停損XD。
+如果弱點剛公開、上游還沒出 patch 來不及修? 應該可以先指望 Cloudflare 或 Azure Front Door 的 WAF 代管規則幫忙先扛一波
+
+如果連邊界都擋不住嚴重程度等級又很高，先掛維護模式關機斷網，才是最成熟的停損XD
 
 ## 檢查清單
 
