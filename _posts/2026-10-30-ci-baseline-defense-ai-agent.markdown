@@ -21,7 +21,6 @@ AI agent 能在 CVE 公開後很快寫出攻擊程式，再自動掃整個網路
 - **PHP2Shell**：10/21 修補，10/26 CISA 確認已遭利用，Amazon 在公開前 4 天就看到攻擊嘗試（[Tenable](https://www.tenable.com/blog/php2shell-cve-2026-109618-cve-2026-109619-frequently-asked-questions-about-critical-php-remote)）
 - **日本**：9 月起多家企業接連遭入侵、個資外洩（[JPCERT/CC](https://www.jpcert.or.jp/at/2026/at260030.html)）
 - **Synology NAS**：10/29 勒索攻擊鎖定沒更新的 DSM（[TechNews](https://infosecu.technews.tw/2026/10/30/dsm-ransomware-targets-synology-urges-nas-users-update-promptly)）
-- **PraisonAI**：CVE-2026-44338 公開後 3 小時 44 分就被攻擊（[CSA](https://labs.cloudsecurityalliance.org/research/csa-research-note-agentic-framework-rapid-exploitation-20260/)）
 
 這些弱點很多在套件或執行環境底層，CI 能擋的是其中相依套件和 image 的部分
 
